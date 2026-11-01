@@ -1,0 +1,17 @@
+/* Extracted via tpl-tools-design-extractor for tpl-ecom-cosmetics */
+:root {
+  --font-primary: 'Jost', sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
+  --color-primary: #4A5D4E;
+  --brand-primary: var(--color-primary);
+  --color-dark: #1C241E;
+  --brand-dark: var(--color-dark);
+  --bg-main: #F7F5F0;
+  --bg-canvas: #EDE8DF;
+  --bg-sand: var(--bg-canvas);
+  --border-color: #D8D0C5;
+  --grid-gap-desktop: 28px 22px;
+  --grid-gap-mobile: 16px 14px;
+  --radius: 6px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}

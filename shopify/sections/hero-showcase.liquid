@@ -1,0 +1,13 @@
+<section class="bmad-hero" style="--color-primary: {{ section.settings.primary_color }};">
+  <h1>{{ section.settings.heading | default: "AURA BOTANICA" }}</h1>
+  <p>{{ section.settings.subheading | default: "Clinical Ayurvedic skincare & cold-pressed botanical elixirs crafted in small batches." }}</p>
+</section>
+{% schema %}
+{
+  "name": "AURA BOTANICA Hero",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Brand Heading", "default": "AURA BOTANICA" },
+    { "type": "color", "id": "primary_color", "label": "Primary Accent", "default": "#4A5D4E" }
+  ]
+}
+{% endschema %}
