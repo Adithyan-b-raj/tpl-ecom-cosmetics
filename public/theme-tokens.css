@@ -1,31 +1,37 @@
 /* ==========================================================================
    BMAD Normalized Design Tokens & Movement Blueprint (theme-tokens.css)
    Movement  : [C] Quiet Apothecary Minimalism
-   Archetype : Clinical Botanical & Quiet Luxury Apothecary (Aesop / Byredo / Le Labo)
+   Archetype : Clinical Botanical & Quiet Luxury Apothecary (Aesop / Le Labo / Byredo)
    Reference : https://www.aesop.com
    Contract  : whitelabel-and-showroom-contract.md §2 + design-movements-and-layout-blueprints.md
    ========================================================================== */
 
 :root {
-  --font-primary: 'Plus Jakarta Sans', sans-serif;
-  --font-accent: 'Cormorant Garamond', serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-accent: 'Cormorant Garamond', 'GFS Didot', Garamond, serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
 
-  --color-primary: #2C3527;
+  /* Quiet Apothecary Palette */
+  --color-primary: #D87A44; /* Warm Apothecary Amber */
   --brand-primary: var(--color-primary);
 
-  --color-dark: #1C1917;
+  --color-dark: #1B1612; /* Deep Espresso */
   --brand-dark: var(--color-dark);
 
-  --bg-main: #FAF7F2;
-  --bg-canvas: #F2ECE1;
+  --color-sage: #4A5844; /* Muted Botanical Sage */
+  --color-sage-dark: #2C3527;
+
+  --bg-main: #F7F4EE; /* Warm Cream Parchment */
+  --bg-canvas: #FAF7F2;
+  --bg-card: #FFFFFF;
+  --bg-rail: #F2ECE1; /* Left Rail Background */
   --bg-sand: var(--bg-canvas);
 
-  --border-color: #E2D9C8;
-  --border-structural: 1px solid #E2D9C8;
+  --border-color: #E2D9C8; /* Precise Apothecary Hairline */
+  --border-structural: 1px solid var(--border-color);
+  
   --shadow-token: none;
-  --grid-gap-desktop: 0px;
-  --grid-gap-mobile: 0px;
-  --radius: 0px;
+  --radius: 0px; /* Minimalist strict zero radius */
+  --radius-sm: 2px;
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }

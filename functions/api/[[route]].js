@@ -1,5 +1,49 @@
-export async function onRequest() {
-  return new Response(JSON.stringify({ service: 'tpl-ecom-cosmetics', status: 'ok', items: [{"id":"COS-6101","name":"Divya Menon (Kochi)","phone":"919847011223","detail":"3-Step Glow Routine (Cleanser + Kumkumadi Serum + SPF 50) • Batch #B26-09","status":"DISPATCHED","amount":"₹2,376"},{"id":"COS-6102","name":"Nandini Rao (Bangalore)","phone":"919447022334","detail":"Mysore Sandalwood EDP + Bakuchiol Cream • Gift Wrapped","status":"PACKED","amount":"₹3,940"},{"id":"COS-6103","name":"Boutique Counter POS #19","phone":"919895033445","detail":"2x Rosemary Scalp Elixir • In-Store Skin Consult","status":"POS PAID","amount":"₹2,300"}] }), {
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30, s-maxage=60, stale-while-revalidate=120' }
+import { getCatalog, getBatchLots, getConsultationLeads, getOrders } from './_store.js';
+
+export async function onRequest(context) {
+  const { request } = context;
+  const url = new URL(request.url);
+  const path = url.pathname.replace(/^\/api\/?/, '');
+
+  if (path === 'health' || path === '') {
+    const catalog = getCatalog();
+    const lots = getBatchLots();
+    const leads = getConsultationLeads();
+    const orders = getOrders();
+
+    return new Response(JSON.stringify({
+      service: 'tpl-ecom-cosmetics',
+      status: 'ok',
+      archetype: 'apothecary-minimalist',
+      version: '2026.11',
+      counts: {
+        products: catalog.length,
+        batch_lots: lots.length,
+        consultation_leads: leads.length,
+        orders: orders.length
+      },
+      endpoints: [
+        '/api/products',
+        '/api/quiz',
+        '/api/batch',
+        '/api/bundle',
+        '/api/checkout',
+        '/api/leads'
+      ]
+    }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=30, s-maxage=60'
+      }
+    });
+  }
+
+  return new Response(JSON.stringify({
+    service: 'tpl-ecom-cosmetics',
+    error: 'ROUTE_NOT_FOUND',
+    path
+  }), {
+    status: 404,
+    headers: { 'Content-Type': 'application/json' }
   });
 }

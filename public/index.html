@@ -3,182 +3,2081 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-wl-brand>BOTANICA // Apothecary Formulations</title>
+  <title data-wl-brand>BOTANICA // Clinical Apothecary & Olfactory Formulations</title>
+  
+  <!-- Typography: Editorial Serif (Cormorant Garamond) + Clean Modern Sans (Plus Jakarta Sans) + Technical Mono (IBM Plex Mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="theme-tokens.css">
   <script src="whitelabel.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-main, #FAF7F2);
-      color: var(--color-dark, #1C1917);
-      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
-      line-height: 1.6;
-      display: flex;
-    }
-    @media (max-width: 900px) { body { flex-direction: column; } }
 
-    /* Fixed Left 240px Apothecary Rail */
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main, #F7F4EE);
+      color: var(--color-dark, #1B1612);
+      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Fixed Left 260px Apothecary Rail */
     .apothecary-rail {
-      width: 240px;
+      width: 260px;
+      min-width: 260px;
       height: 100vh;
       position: sticky;
       top: 0;
-      background: #F2ECE1;
+      background: var(--bg-rail, #F2ECE1);
       border-right: 1px solid var(--border-color, #E2D9C8);
-      padding: 40px 24px;
+      padding: 44px 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      font-family: var(--font-mono, monospace);
-      font-size: 12px;
+      font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      z-index: 50;
+      overflow-y: auto;
     }
-    @media (max-width: 900px) {
-      .apothecary-rail { width: 100%; height: auto; position: relative; border-bottom: 1px solid #E2D9C8; }
-    }
+
     .brand-wordmark {
       font-family: var(--font-accent, 'Cormorant Garamond', serif);
-      font-size: 26px;
-      text-transform: uppercase;
+      font-size: 28px;
+      font-weight: 500;
       letter-spacing: 2px;
-      color: #1C1917;
+      text-transform: uppercase;
+      color: var(--color-dark, #1B1612);
       text-decoration: none;
-      margin-bottom: 40px;
+      display: block;
+      margin-bottom: 8px;
     }
-    .rail-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .rail-links a { color: #57534E; text-decoration: none; transition: color 0.2s; }
-    .rail-links a:hover { color: #1C1917; }
+
+    .rail-sub {
+      font-size: 10px;
+      color: #78716C;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+    }
+
+    .rail-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .rail-nav a {
+      color: #57534E;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.15s ease, transform 0.15s ease;
+      padding: 4px 0;
+    }
+
+    .rail-nav a:hover, .rail-nav a.active {
+      color: var(--color-dark, #1B1612);
+      font-weight: 600;
+    }
+
+    .rail-nav .nav-idx {
+      color: var(--color-primary, #D87A44);
+      margin-right: 8px;
+    }
+
+    .rail-cart-pill {
+      background: var(--color-dark, #1B1612);
+      color: #FFF;
+      padding: 2px 7px;
+      font-size: 10px;
+      border-radius: 10px;
+    }
+
+    .rail-footer {
+      border-top: 1px solid var(--border-color, #E2D9C8);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 10px;
+      color: #78716C;
+      line-height: 1.5;
+    }
+
+    .rail-concierge-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-sage, #4A5844);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .rail-concierge-link:hover {
+      text-decoration: underline;
+    }
 
     /* Main Editorial Canvas */
     .apothecary-canvas {
       flex: 1;
-      padding: 60px 80px;
-      max-width: 1000px;
-    }
-    @media (max-width: 900px) { .apothecary-canvas { padding: 40px 24px; } }
-
-    .essay-hero h1 {
-      font-family: var(--font-accent);
-      font-size: clamp(36px, 4.5vw, 54px);
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      margin-bottom: 24px;
+      max-width: 1100px;
+      padding: 60px 80px 100px;
+      background: var(--bg-main, #F7F4EE);
+      overflow-x: hidden;
     }
 
-    /* 3-Step Regimen Builder Drawer */
-    .diagnostic-panel {
-      background: #FFF;
-      border: 1px solid var(--border-color);
-      padding: 30px;
-      margin: 40px 0;
+    /* Editorial Hero Section */
+    .essay-hero {
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      padding-bottom: 48px;
+    }
+
+    .badge-series {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-primary, #D87A44);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .diag-options { display: flex; gap: 10px; margin: 12px 0 20px; }
-    .diag-pill {
-      background: #FAF7F2;
-      border: 1px solid #E2D9C8;
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-    .diag-pill.active { background: #2C3527; color: #FFF; }
 
-    /* Hairline Specimen Ledger */
+    .badge-series::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color, #E2D9C8);
+      max-width: 140px;
+    }
+
+    .hero-title {
+      font-family: var(--font-accent);
+      font-size: clamp(38px, 4.8vw, 56px);
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      color: var(--color-dark, #1B1612);
+      margin-bottom: 20px;
+      max-width: 760px;
+    }
+
+    .hero-text {
+      color: #57534E;
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-apothecary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-dark, #1B1612);
+      color: #FFF;
+      padding: 14px 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--color-dark, #1B1612);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-apothecary:hover {
+      background: #2C3527;
+      border-color: #2C3527;
+    }
+
+    .btn-apothecary-outline {
+      background: transparent;
+      color: var(--color-dark, #1B1612);
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 14px 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-apothecary-outline:hover {
+      border-color: var(--color-dark, #1B1612);
+      background: #FAF7F2;
+    }
+
+    .btn-apothecary-amber {
+      background: var(--color-primary, #D87A44);
+      color: #FFF;
+      border: 1px solid var(--color-primary, #D87A44);
+    }
+    .btn-apothecary-amber:hover {
+      background: #B85F2C;
+      border-color: #B85F2C;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-dark, #1B1612);
+    }
+
+    .section-title {
+      font-family: var(--font-accent);
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .section-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #78716C;
+      letter-spacing: 1px;
+    }
+
+    /* Hairline Specimen Table */
     .specimen-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 40px;
+      margin-bottom: 56px;
       font-family: var(--font-mono);
       font-size: 12px;
     }
+
     .specimen-table th {
-      border-bottom: 1px solid #1C1917;
-      padding: 10px 0;
+      border-bottom: 1px solid var(--color-dark, #1B1612);
+      padding: 12px 10px;
       text-align: left;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #78716C;
+      text-transform: uppercase;
     }
+
     .specimen-table td {
-      border-bottom: 1px solid #E2D9C8;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      padding: 18px 10px;
+      vertical-align: middle;
+    }
+
+    .specimen-table tr:hover td {
+      background-color: rgba(242, 236, 225, 0.4);
+    }
+
+    .specimen-name {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-dark, #1B1612);
+      display: block;
+    }
+    .specimen-sub {
+      font-size: 11px;
+      color: #78716C;
+      margin-top: 2px;
+      font-family: var(--font-mono);
+    }
+
+    .badge-pao {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #EAE3DC;
+      padding: 3px 6px;
+      font-size: 10px;
+      color: #44403C;
+    }
+
+    .badge-ewg {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      margin-right: 4px;
+    }
+
+    /* Product Grid Cards */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .apothecary-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .apothecary-card:hover {
+      border-color: #8C827A;
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      height: 280px;
+      background: #FAF7F2;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .apothecary-card:hover .card-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .card-lot-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(27, 22, 18, 0.85);
+      color: #FFF;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 4px 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .card-step-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #F7F4EE;
+      color: var(--color-primary, #D87A44);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border: 1px solid var(--border-color, #E2D9C8);
+    }
+
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-meta-line {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #78716C;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: var(--font-accent);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      color: var(--color-dark, #1B1612);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: #57534E;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .card-actives {
+      background: #FAF7F2;
+      border-left: 2px solid var(--color-sage, #4A5844);
+      padding: 8px 12px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: #44403C;
+      margin-bottom: 20px;
+    }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color, #E2D9C8);
+      gap: 8px;
+    }
+
+    .card-price {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-dark, #1B1612);
+    }
+
+    .card-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      border: 1px solid var(--border-color, #E2D9C8);
+      background: #FFF;
+      color: var(--color-dark, #1B1612);
+      transition: all 0.15s ease;
+    }
+    .btn-sm:hover {
+      background: var(--color-dark, #1B1612);
+      color: #FFF;
+      border-color: var(--color-dark, #1B1612);
+    }
+
+    .btn-sm-primary {
+      background: var(--color-dark, #1B1612);
+      color: #FFF;
+      border-color: var(--color-dark, #1B1612);
+    }
+    .btn-sm-primary:hover {
+      background: var(--color-sage, #4A5844);
+      border-color: var(--color-sage, #4A5844);
+    }
+
+    /* Olfactory Fragrance Pyramid Display */
+    .olfactory-feature {
+      background: #1B1612;
+      color: #F7F4EE;
+      padding: 48px;
+      margin-bottom: 64px;
+      border: 1px solid #332B25;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .olfactory-left h3 {
+      font-family: var(--font-accent);
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: #FFF;
+    }
+
+    .olfactory-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--color-primary, #D87A44);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .olfactory-text {
+      color: #A8A29E;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .pyramid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      font-family: var(--font-mono);
+    }
+
+    .pyramid-tier {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(226, 217, 200, 0.15);
+      padding: 16px 20px;
+      position: relative;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .pyramid-tier:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-primary, #D87A44);
+    }
+
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--color-primary, #D87A44);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .tier-notes {
+      font-size: 13px;
+      font-weight: 500;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+
+    .tier-desc {
+      font-size: 11px;
+      color: #A8A29E;
+    }
+
+    /* 3-Piece Routine Bundle Banner & Drawer Widget */
+    .bundle-banner {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 36px 40px;
+      margin-bottom: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bundle-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-primary, #D87A44);
+    }
+
+    .bundle-glow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFF7ED;
+      color: #C2410C;
+      border: 1px solid #FFEDD5;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 12px rgba(216, 122, 68, 0.2);
+    }
+
+    /* Modals & Slide-out Drawers */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(27, 22, 18, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .apothecary-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 480px;
+      max-width: 92vw;
+      height: 100vh;
+      background: #FAF7F2;
+      border-left: 1px solid var(--border-color, #E2D9C8);
+      z-index: 110;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1));
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
+    }
+    .apothecary-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFF;
+    }
+
+    .drawer-title {
+      font-family: var(--font-accent);
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 20px;
+      cursor: pointer;
+      color: #78716C;
+      padding: 4px;
+    }
+    .drawer-close:hover {
+      color: var(--color-dark, #1B1612);
+    }
+
+    .drawer-body {
+      padding: 28px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .drawer-foot {
+      padding: 24px 28px;
+      border-top: 1px solid var(--border-color, #E2D9C8);
+      background: #FFF;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Diagnostic Quiz Inside Drawer / Modal */
+    .quiz-step-box {
+      margin-bottom: 24px;
+    }
+
+    .quiz-step-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--color-primary, #D87A44);
+      margin-bottom: 8px;
+    }
+
+    .quiz-step-title {
+      font-family: var(--font-accent);
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .quiz-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .quiz-option-btn {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 12px 16px;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+    .quiz-option-btn:hover {
+      background: #F2ECE1;
+      border-color: #8C827A;
+    }
+    .quiz-option-btn.selected {
+      background: #1B1612;
+      color: #FFF;
+      border-color: #1B1612;
+    }
+
+    .quiz-input-field {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color, #E2D9C8);
+      background: #FFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-top: 6px;
+      outline: none;
+    }
+    .quiz-input-field:focus {
+      border-color: var(--color-dark, #1B1612);
+    }
+
+    .prescription-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .prescription-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border-color, #E2D9C8);
+    }
+    .prescription-item:last-child {
+      border-bottom: none;
+    }
+
+    /* INCI Ledger Modal */
+    .inci-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      margin-top: 12px;
+    }
+    .inci-table th {
+      border-bottom: 1px solid var(--color-dark, #1B1612);
+      padding: 8px 4px;
+      text-align: left;
+      color: #78716C;
+      font-size: 10px;
+    }
+    .inci-table td {
+      border-bottom: 1px solid #EAE3DC;
+      padding: 10px 4px;
+      vertical-align: top;
+    }
+
+    /* Cart Item styling */
+    .cart-item {
+      display: flex;
+      gap: 14px;
       padding: 16px 0;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+    }
+    .cart-item-img {
+      width: 64px;
+      height: 64px;
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      object-fit: cover;
+    }
+    .cart-item-info {
+      flex: 1;
+    }
+    .cart-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .cart-item-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #78716C;
+    }
+    .cart-item-price {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Cashfree Simulated QR */
+    .upi-qr-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .upi-qr-frame {
+      display: inline-block;
+      padding: 12px;
+      background: #FFF;
+      border: 2px solid var(--color-dark, #1B1612);
+      margin: 12px 0;
+    }
+
+    /* Responsive Mobile Adjustments */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      .apothecary-rail {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        position: relative;
+        padding: 24px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color, #E2D9C8);
+      }
+      .rail-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+      }
+      .rail-footer {
+        display: none;
+      }
+      .apothecary-canvas {
+        padding: 40px 24px 80px;
+      }
+      .olfactory-feature {
+        grid-template-columns: 1fr;
+        padding: 28px;
+        gap: 32px;
+      }
+      .bundle-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
-<body data-layout-archetype="quiet-apothecary-minimalism">
-  <aside class="apothecary-rail">
+
+<body data-layout-archetype="apothecary-minimalist">
+
+  <!-- =========================================================================
+       1. FIXED LEFT 260px APOTHECARY RAIL NAVIGATION
+       ========================================================================= -->
+  <aside class="apothecary-rail" id="apothecaryRail">
     <div>
       <a href="#" class="brand-wordmark" data-wl-brand>BOTANICA</a>
-      <ul class="rail-links">
-        <li><a href="#serums">01 / BOTANICAL SERUMS</a></li>
-        <li><a href="#cleansers">02 / HYDRATING BALMS</a></li>
-        <li><a href="#diagnostic">03 / REGIMEN DIAGNOSTIC</a></li>
-        <li><a href="admin.html">04 / BATCH LEDGER</a></li>
+      <div class="rail-sub" data-wl-tagline>Quiet Apothecary & Olfactory Labs</div>
+
+      <ul class="rail-nav">
+        <li>
+          <a href="#formulations" class="active">
+            <span><span class="nav-idx">I</span> FORMULATIONS</span>
+            <span style="font-size:10px; color:#A8A29E;">[5]</span>
+          </a>
+        </li>
+        <li>
+          <a href="#specimens">
+            <span><span class="nav-idx">II</span> SPECIMEN LEDGER</span>
+          </a>
+        </li>
+        <li>
+          <a href="#olfactory">
+            <span><span class="nav-idx">III</span> OLFACTORY NO. 07</span>
+          </a>
+        </li>
+        <li>
+          <a href="#diagnostic" onclick="openQuizDrawer(); return false;">
+            <span><span class="nav-idx">IV</span> SKIN DIAGNOSTIC</span>
+            <span style="color:var(--color-primary); font-weight:600;">QUIZ</span>
+          </a>
+        </li>
+        <li>
+          <a href="#bundle" onclick="openBundleDrawer(); return false;">
+            <span><span class="nav-idx">V</span> 3-PIECE REGIMEN</span>
+            <span style="color:#C2410C; font-weight:600;">-15%</span>
+          </a>
+        </li>
+        <li>
+          <a href="admin.html">
+            <span><span class="nav-idx">VI</span> BATCH LOT LEDGER</span>
+            <span style="font-size:10px; color:#78716C;">ADMIN ↗</span>
+          </a>
+        </li>
       </ul>
+
+      <div style="margin-top: 36px; padding-top: 20px; border-top: 1px dashed var(--border-color);">
+        <button class="btn-apothecary-outline" style="width:100%; font-size:11px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;" onclick="openCartDrawer()">
+          <span>APOTHECARY BAG</span>
+          <span class="rail-cart-pill" id="cartBadgeCount">0</span>
+        </button>
+      </div>
     </div>
-    <div style="font-size:11px; color:#78716C;">
-      PH 5.5 CLINICAL STANDARD • PARCHMENT HARMONY
+
+    <div class="rail-footer">
+      <div>
+        <div style="color:var(--color-dark); font-weight:600;">PH 5.5 STANDARDS</div>
+        <div>ISO-14644 Class 7 Cleanroom Synthesis • Cold-Pressed Wild Botanical Assets</div>
+      </div>
+      <div>
+        <a id="floatingWaBtn" class="rail-concierge-link" href="https://wa.me/919061902295?text=Hello%20Botanica%2C%20I%20would%20like%20a%20skin%20consultation" target="_blank" rel="noopener">
+          <span>Concierge Formulation Advice ↗</span>
+        </a>
+      </div>
     </div>
   </aside>
 
+  <!-- =========================================================================
+       2. EDITORIAL APOTHECARY CANVAS
+       ========================================================================= -->
   <main class="apothecary-canvas">
-    <div class="essay-hero">
-      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:2px; color:#78716C; margin-bottom:12px;">FORMULATION SERIES NO. 08</div>
-      <h1 data-wl-tagline>Quiet Botanical Care for Stressed Skin.</h1>
-      <p style="color:#57534E; font-size:16px; line-height:1.8;">Distilled with wild harvested damask rose, high-molecular hyaluronic acid, and cold-pressed marula oil to fortify lipid barriers against urban oxidation.</p>
+
+    <!-- Essay Hero -->
+    <header class="essay-hero">
+      <div class="badge-series">FORMULATION SERIES • V2026.11 • CLEANROOM ISOLATES</div>
+      <h1 class="hero-title" data-wl-tagline>Quiet Botanical Care for Stressed Cutaneous Barriers.</h1>
+      <p class="hero-text">
+        Every formula in our apothecary is engineered at bio-compatible physiological pH, stripped of artificial perfumes, aggressive penetrants, and synthetic fillers. We utilize cold-pressed high-linoleic botanical lipids, bio-fermented Gotu Kola, and bio-identical ceramides to fortify the lipid envelope against metropolitan oxidation.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-apothecary btn-apothecary-amber" onclick="openQuizDrawer()">3-Step Clinical Diagnostic</button>
+        <button class="btn-apothecary" onclick="openBundleDrawer()">Acquire 3-Piece Regimen (-15%)</button>
+        <a href="#specimens" class="btn-apothecary-outline">View Specimen Ledger</a>
+      </div>
+    </header>
+
+    <!-- 3-Piece Routine Feature Banner -->
+    <div class="bundle-banner" id="bundle">
+      <div>
+        <div class="bundle-glow-badge">★ CLINICAL APOTHECARY PROTOCOL</div>
+        <h2 style="font-family:var(--font-accent); font-size:24px; margin-bottom:8px;">The 3-Step Biomimetic Routine</h2>
+        <p style="color:#57534E; font-size:13px; max-width:540px;">
+          Cleanse with Centella emulsion, treat with cellular active serums, and seal with biomimetic ceramides. Combining all three activates an automatic <strong>15% Routine Discount</strong> at checkout.
+        </p>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--font-mono); font-size:12px; color:#78716C; margin-bottom:4px;">STARTING FROM</div>
+        <div style="font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--color-dark); margin-bottom:12px;">₹6,077 <span style="text-decoration:line-through; font-size:14px; color:#A8A29E;">₹7,150</span></div>
+        <button class="btn-apothecary" onclick="openBundleDrawer()">Configure 3-Piece Bundle</button>
+      </div>
     </div>
 
-    <!-- Regimen Builder -->
-    <div class="diagnostic-panel" id="diagnostic">
-      <div style="color:#78716C; font-size:11px;">STEP 1: SELECT PRIMARY SKIN CONCERN</div>
-      <div class="diag-options">
-        <button class="diag-pill active" onclick="setConcern(this, 'Dehydration')">DEHYDRATION</button>
-        <button class="diag-pill" onclick="setConcern(this, 'Barrier Repair')">BARRIER REPAIR</button>
-        <button class="diag-pill" onclick="setConcern(this, 'Photo-Aging')">PHOTO-AGING</button>
+    <!-- Section 1: Formulations Grid -->
+    <section id="formulations" style="margin-bottom:64px;">
+      <div class="section-header">
+        <h2 class="section-title">Apothecary Formulations</h2>
+        <div class="section-meta">SERIES 01 — 05 • BIO-IDENTICAL ISOLATES</div>
       </div>
-      <div style="border-top:1px dashed #E2D9C8; padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
-        <div>RECOMMENDED REGIMEN: <strong id="recTxt">Damask Rose Barrier Serum (30ml)</strong></div>
-        <button style="background:#2C3527; color:#FFF; border:none; padding:10px 20px; font-family:var(--font-mono); font-size:12px; cursor:pointer;" onclick="alert('Regimen added to your apothecary bag.')">ACQUIRE REGIMEN — ₹3,200</button>
-      </div>
-    </div>
 
-    <!-- Specimen Ledger -->
-    <table class="specimen-table" id="serums">
-      <thead>
-        <tr><th>FORMULATION</th><th>KEY ACTIVES</th><th>PH LEVEL</th><th>VOLUME</th><th>PRICE</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>01 / Damask Rose Serum</strong></td>
-          <td>Niacinamide 5% · Marula Oil</td>
-          <td>pH 5.4</td>
-          <td>30 mL</td>
-          <td>₹3,200.00</td>
-        </tr>
-        <tr>
-          <td><strong>02 / Botanical Cleansing Balm</strong></td>
-          <td>Sweet Almond · Blue Tansy</td>
-          <td>pH 6.0</td>
-          <td>100 mL</td>
-          <td>₹2,400.00</td>
-        </tr>
-        <tr>
-          <td><strong>03 / Midnight Lipid Elixir</strong></td>
-          <td>Bakuchiol 1% · Squalane</td>
-          <td>pH 5.2</td>
-          <td>50 mL</td>
-          <td>₹4,500.00</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="product-grid" id="productGrid">
+        <!-- Rendered dynamically via JavaScript or initial fallback -->
+      </div>
+    </section>
+
+    <!-- Section 2: Olfactory Specimen Spotlight (No. 07 Santal & Smoked Bergamot) -->
+    <section class="olfactory-feature" id="olfactory">
+      <div class="olfactory-left">
+        <div class="olfactory-tag">Apothecary Olfactory Specimen No. 07</div>
+        <h3>Santal & Smoked Bergamot</h3>
+        <div style="font-family:var(--font-mono); font-size:12px; color:#D87A44; margin-bottom:16px;">22% PURE EXTRAIT CONCENTRATION • 50 mL</div>
+        <p class="olfactory-text">
+          An intimate, grounding olfactory portrait combining Calabrian smoked bergamot with Australian album sandalwood, papyrus reed, and black amber concrete. Aged for 90 days in inert glass carboys.
+        </p>
+        <div style="margin-bottom:24px;">
+          <div style="font-family:var(--font-mono); font-size:11px; color:#78716C; margin-bottom:6px;">BATCH LOT ALLOCATION</div>
+          <div style="font-family:var(--font-mono); font-size:13px; color:#FFF;">LOT-2026-D01 • 188 / 400 BOTTLES REMAINING</div>
+        </div>
+        <button class="btn-apothecary btn-apothecary-amber" onclick="quickAddToCart('PRD-PRF-04')">Acquire Specimen — ₹4,600</button>
+      </div>
+
+      <!-- Interactive 3-Tier Olfactory Notes Pyramid Visualizer -->
+      <div class="pyramid-container">
+        <div style="font-size:10px; color:#78716C; letter-spacing:1px; margin-bottom:4px; text-transform:uppercase;">OLFACTORY NOTE EVAPORATION PYRAMID</div>
+
+        <!-- Top Notes Tier -->
+        <div class="pyramid-tier">
+          <div class="tier-header">
+            <span>Tier 1 • Top Notes</span>
+            <span>15 — 30 Mins</span>
+          </div>
+          <div class="tier-notes">Smoked Calabrian Bergamot • Italian Pink Pepper • Green Cardamom Pod</div>
+          <div class="tier-desc">Roasted Mediterranean citrus providing an invigorating, peppery sparkle.</div>
+        </div>
+
+        <!-- Heart Notes Tier -->
+        <div class="pyramid-tier">
+          <div class="tier-header">
+            <span>Tier 2 • Heart Notes</span>
+            <span>2 — 5 Hours</span>
+          </div>
+          <div class="tier-notes">Nile Papyrus Reed • Black Amber Resin • Florentine Orris Concrete</div>
+          <div class="tier-desc">Antique library scrolls, honeyed smoky resins, and powdery iris earthiness.</div>
+        </div>
+
+        <!-- Base Notes Tier -->
+        <div class="pyramid-tier">
+          <div class="tier-header">
+            <span>Tier 3 • Base Notes</span>
+            <span>8 — 14+ Hours</span>
+          </div>
+          <div class="tier-notes">Australian Album Sandalwood • Moroccan Atlas Cedar • Dark Botanical Musk</div>
+          <div class="tier-desc">Sacred creamy timber harvested under sustainable forestry protocols.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Specimen Ledger Table with Hairlines -->
+    <section id="specimens">
+      <div class="section-header">
+        <h2 class="section-title">Clinical Specimen Ledger</h2>
+        <div class="section-meta">INSPECTION REGISTER • BATCH STABILITY VERIFIED</div>
+      </div>
+
+      <table class="specimen-table">
+        <thead>
+          <tr>
+            <th>Specimen Code</th>
+            <th>Formulation</th>
+            <th>Step</th>
+            <th>pH</th>
+            <th>PAO</th>
+            <th>Active Batch</th>
+            <th>Price</th>
+            <th style="text-align:right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="specimenTableBody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Environmental & Ethical Footnote -->
+    <footer style="margin-top:64px; padding-top:32px; border-top:1px solid var(--border-color); font-family:var(--font-mono); font-size:11px; color:#78716C; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <div>
+        <span data-wl-brand>BOTANICA</span> LABORATORIES & APOTHECARY • BATCH INTEGRITY GUARANTEED
+      </div>
+      <div>
+        ZERO MICROPLASTICS • RECYCLABLE AMBER FLINT GLASS • D1 EDGE RESILIENT
+      </div>
+    </footer>
+
   </main>
 
+  <!-- =========================================================================
+       3. INTERACTIVE 3-STEP SKIN DIAGNOSTIC QUIZ DRAWER
+       ========================================================================= -->
+  <div class="drawer-overlay" id="quizOverlay" onclick="closeQuizDrawer()"></div>
+  <div class="apothecary-drawer" id="quizDrawer">
+    <div class="drawer-head">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1.5px;">DIAGNOSTIC CONSULTATION</div>
+        <div class="drawer-title">3-Step Skin Diagnostic</div>
+      </div>
+      <button class="drawer-close" onclick="closeQuizDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body" id="quizBody">
+      <div id="quizFormContainer">
+        <!-- Step 1 -->
+        <div class="quiz-step-box">
+          <div class="quiz-step-label">STEP 01 OF 03 • CUTANEOUS BASELINE</div>
+          <h4 class="quiz-step-title">Identify Your Skin Type</h4>
+          <div class="quiz-options-grid" id="skinTypeOptions">
+            <button class="quiz-option-btn selected" onclick="selectQuizOption('skinType', 'Sensitive / Reactive', this)">
+              <span>Sensitive / Reactive</span>
+              <span>●</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('skinType', 'Dry / Barrier-Impaired', this)">
+              <span>Dry / Barrier-Impaired</span>
+              <span>○</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('skinType', 'Oily / Combination', this)">
+              <span>Oily / Combination</span>
+              <span>○</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('skinType', 'Mature / Photo-Damaged', this)">
+              <span>Mature / Photo-Damaged</span>
+              <span>○</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="quiz-step-box">
+          <div class="quiz-step-label">STEP 02 OF 03 • PRIMARY DERMAL TARGET</div>
+          <h4 class="quiz-step-title">Select Your Primary Concern</h4>
+          <div class="quiz-options-grid" id="concernOptions">
+            <button class="quiz-option-btn selected" onclick="selectQuizOption('concern', 'Barrier Repair', this)">
+              <span>Barrier Repair & Anti-Redness</span>
+              <span>●</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('concern', 'Blemish & Texture', this)">
+              <span>Blemish, Congestion & Sebum Pores</span>
+              <span>○</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('concern', 'Fine Lines & Elasticity', this)">
+              <span>Fine Lines, Loss of Firmness & Retinoid Target</span>
+              <span>○</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('concern', 'Deep Hydration', this)">
+              <span>Deep Hydration & Transepidermal Water Loss</span>
+              <span>○</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="quiz-step-box">
+          <div class="quiz-step-label">STEP 03 OF 03 • SENSORY TEXTURE</div>
+          <h4 class="quiz-step-title">Preferred Formulation Finish</h4>
+          <div class="quiz-options-grid" id="textureOptions">
+            <button class="quiz-option-btn selected" onclick="selectQuizOption('texture', 'Biomimetic Rich Cream', this)">
+              <span>Biomimetic Rich Cream (Velvety Seal)</span>
+              <span>●</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('texture', 'Lightweight Water Gel', this)">
+              <span>Lightweight Viscous Water-Gel</span>
+              <span>○</span>
+            </button>
+            <button class="quiz-option-btn" onclick="selectQuizOption('texture', 'Silky Botanical Oil', this)">
+              <span>Silky Dry Botanical Oil</span>
+              <span>○</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Lead Capture Input -->
+        <div style="background:#FFF; border:1px solid var(--border-color); padding:16px; margin-top:16px;">
+          <div style="font-family:var(--font-mono); font-size:10px; color:#78716C; margin-bottom:8px;">PRESCRIPTION RECORD & WHATSAPP DISPATCH</div>
+          <label style="font-size:11px; font-weight:600; display:block; margin-bottom:2px;">Your Name / Title</label>
+          <input type="text" id="quizLeadName" class="quiz-input-field" placeholder="e.g. Dr. Tara Varma" value="Dr. Tara Varma">
+          
+          <label style="font-size:11px; font-weight:600; display:block; margin-top:10px; margin-bottom:2px;">WhatsApp Mobile (for Chemist Follow-Up)</label>
+          <input type="text" id="quizLeadPhone" class="quiz-input-field" placeholder="e.g. 919847112233" value="919847112233">
+        </div>
+      </div>
+
+      <!-- Prescribed Routine Output Box (Revealed after submission) -->
+      <div id="quizResultContainer" style="display:none;">
+        <div style="background:#ECFDF5; border:1px solid #A7F3D0; padding:12px; font-family:var(--font-mono); font-size:11px; color:#065F46; margin-bottom:16px;">
+          ✓ CLINICAL 3-STEP PRESCRIPTION GENERATED
+        </div>
+        <h3 style="font-family:var(--font-accent); font-size:20px; margin-bottom:8px;" id="prescribedCustomerTitle">Prescription for Dr. Tara Varma</h3>
+        <p style="font-size:12px; color:#57534E; margin-bottom:16px;" id="prescribedSummaryTxt">Tailored for Barrier Repair and Sensitive / Reactive cutaneous barrier.</p>
+
+        <div class="prescription-card" id="prescribedItemsList">
+          <!-- Filled by JS -->
+        </div>
+
+        <div style="margin-top:16px; padding:12px; background:#FFF; border:1px solid var(--border-color); font-family:var(--font-mono); font-size:11px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>Individual Total:</span>
+            <span id="prescribedSubtotal">₹7,150</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; color:#C2410C; margin-bottom:6px;">
+            <span>Apothecary Routine Discount (15%):</span>
+            <span id="prescribedDiscount">-₹1,073</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-weight:600; font-size:13px; border-top:1px dashed #E2D9C8; padding-top:6px;">
+            <span>Prescribed Total:</span>
+            <span id="prescribedTotal">₹6,077</span>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a id="prescribedWaLink" href="#" target="_blank" class="btn-apothecary-outline" style="display:block; text-align:center; font-size:11px; margin-bottom:8px;">
+            Consult with Apothecary Chemist on WhatsApp ↗
+          </a>
+          <button class="btn-apothecary btn-apothecary-amber" style="width:100%;" onclick="addPrescribedRoutineToCart()">
+            Acquire 3-Piece Regimen (₹6,077)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-foot" id="quizFooterActions">
+      <button class="btn-apothecary btn-apothecary-amber" style="width:100%;" onclick="submitSkinQuiz()">Generate 3-Step Prescription</button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       4. INTERACTIVE 3-PIECE ROUTINE BUNDLE DRAWER
+       ========================================================================= -->
+  <div class="drawer-overlay" id="bundleOverlay" onclick="closeBundleDrawer()"></div>
+  <div class="apothecary-drawer" id="bundleDrawer">
+    <div class="drawer-head">
+      <div>
+        <div class="bundle-glow-badge">15% ROUTINE DISCOUNT</div>
+        <div class="drawer-title">3-Piece Apothecary Regimen</div>
+      </div>
+      <button class="drawer-close" onclick="closeBundleDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <p style="font-size:12px; color:#57534E; margin-bottom:20px;">
+        Curate your personal 3-step botanical routine (Cleanse + Treat + Moisturize) to activate the 15% Apothecary Routine Discount.
+      </p>
+
+      <!-- Slot 1: Cleanse -->
+      <div style="background:#FFF; border:1px solid var(--border-color); padding:16px; margin-bottom:16px;">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1px; margin-bottom:4px;">STEP 01 • CLEANSE</div>
+        <div style="font-weight:600; font-size:13px; margin-bottom:4px;">Botanical Barrier Defense Cleanser (200 mL)</div>
+        <div style="font-size:11px; color:#78716C; margin-bottom:8px;">Bio-fermented Centella & Colloidal Oat • pH 5.5</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:var(--font-mono); font-weight:600;">₹1,850</span>
+          <span style="font-family:var(--font-mono); font-size:10px; color:#059669;">✓ INCLUDED IN BUNDLE</span>
+        </div>
+      </div>
+
+      <!-- Slot 2: Treat (Picker) -->
+      <div style="background:#FFF; border:1px solid var(--border-color); padding:16px; margin-bottom:16px;">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1px; margin-bottom:4px;">STEP 02 • TREAT (SELECT ACTIVE)</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+          <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+            <input type="radio" name="bundleTreatment" value="PRD-TRT-02" checked onchange="updateBundleCalculations()" style="margin-top:3px;">
+            <div>
+              <div style="font-weight:600; font-size:12px;">10% Niacinamide + Zinc Cellular Serum (30 mL)</div>
+              <div style="font-size:11px; color:#78716C;">Refine pores, control sebum, brighten texture • ₹2,450</div>
+            </div>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+            <input type="radio" name="bundleTreatment" value="PRD-ELX-05" onchange="updateBundleCalculations()" style="margin-top:3px;">
+            <div>
+              <div style="font-weight:600; font-size:12px;">Cold-Pressed Bakuchiol Night Elixir (30 mL)</div>
+              <div style="font-size:11px; color:#78716C;">Phyto-retinol smoothing, firming, nocturnal renewal • ₹3,400</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Slot 3: Moisturize -->
+      <div style="background:#FFF; border:1px solid var(--border-color); padding:16px; margin-bottom:16px;">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1px; margin-bottom:4px;">STEP 03 • MOISTURIZE</div>
+        <div style="font-weight:600; font-size:13px; margin-bottom:4px;">Ceramide Biomimetic Restorative Cream (50 mL)</div>
+        <div style="font-size:11px; color:#78716C; margin-bottom:8px;">Bio-identical Ceramides NP/AP/EOP & Camellia Seed Oil • pH 5.8</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:var(--font-mono); font-weight:600;">₹2,850</span>
+          <span style="font-family:var(--font-mono); font-size:10px; color:#059669;">✓ INCLUDED IN BUNDLE</span>
+        </div>
+      </div>
+
+      <!-- Live Calculation Breakdown -->
+      <div style="background:#FFF7ED; border:1px solid #FFEDD5; padding:16px; font-family:var(--font-mono); font-size:11px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>Individual Retail Price:</span>
+          <span id="bundleDrawerSubtotal">₹7,150</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; color:#C2410C; margin-bottom:6px; font-weight:600;">
+          <span>15% Routine Discount:</span>
+          <span id="bundleDrawerDiscount">-₹1,073</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; border-top:1px dashed #FDBA74; padding-top:6px; color:#1B1612;">
+          <span>Bundle Total:</span>
+          <span id="bundleDrawerTotal">₹6,077</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-foot">
+      <button class="btn-apothecary btn-apothecary-amber" style="width:100%;" onclick="addCustomBundleToCart()">
+        Acquire 3-Piece Bundle — <span id="bundleDrawerBtnPrice">₹6,077</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. FULL INCI COSMETIC INGREDIENT LEDGER MODAL
+       ========================================================================= -->
+  <div class="drawer-overlay" id="inciOverlay" onclick="closeInciModal()"></div>
+  <div class="apothecary-drawer" id="inciModal" style="width:540px;">
+    <div class="drawer-head">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1.5px;">SCIENTIFIC DISCLOSURE</div>
+        <div class="drawer-title" id="inciModalTitle">INCI Cosmetic Ledger</div>
+      </div>
+      <button class="drawer-close" onclick="closeInciModal()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div style="margin-bottom:16px; font-size:12px; color:#57534E;">
+        Every compound in our formulation is listed below in descending order of concentration, including its common name, physiological function role, and verified EWG skin safety score.
+      </div>
+      <div id="inciLedgerContent">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="drawer-foot">
+      <button class="btn-apothecary-outline" style="width:100%; font-size:11px;" onclick="closeInciModal()">Close INCI Ledger</button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       6. STICKY EXPRESS CART DRAWER WITH CASHFREE UPI QR
+       ========================================================================= -->
+  <div class="drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+  <div class="apothecary-drawer" id="cartDrawer">
+    <div class="drawer-head">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); letter-spacing:1px;">APOTHECARY DISPATCH</div>
+        <div class="drawer-title">Apothecary Bag (<span id="cartDrawerCount">0</span>)</div>
+      </div>
+      <button class="drawer-close" onclick="closeCartDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body" id="cartDrawerBody">
+      <div id="cartItemsList">
+        <div style="text-align:center; padding:48px 0; color:#78716C; font-family:var(--font-mono); font-size:12px;">
+          Your apothecary bag is currently empty.
+        </div>
+      </div>
+
+      <!-- Cashfree UPI Simulation Box (Appears after clicking 'Proceed to Dispatch') -->
+      <div id="checkoutFormBox" style="display:none; margin-top:20px; border-top:1px solid var(--border-color); padding-top:20px;">
+        <h4 style="font-family:var(--font-accent); font-size:18px; margin-bottom:12px;">Dispatch & Payment Protocol</h4>
+        
+        <label style="font-size:11px; font-weight:600; display:block; margin-bottom:2px;">Full Name / Salutation</label>
+        <input type="text" id="custNameInput" class="quiz-input-field" placeholder="Client Name" value="Meera Nair">
+        
+        <label style="font-size:11px; font-weight:600; display:block; margin-top:8px; margin-bottom:2px;">Phone Number (WhatsApp Verified)</label>
+        <input type="text" id="custPhoneInput" class="quiz-input-field" placeholder="Phone" value="919846001122">
+
+        <label style="font-size:11px; font-weight:600; display:block; margin-top:8px; margin-bottom:2px;">Courier Delivery Address</label>
+        <input type="text" id="custAddressInput" class="quiz-input-field" placeholder="Address" value="Villa 14, Rosewood Gardens, Kochi 682036">
+
+        <button class="btn-apothecary btn-apothecary-amber" style="width:100%; margin-top:14px;" onclick="executeCheckoutOrder()">
+          Generate Cashfree UPI QR Code
+        </button>
+      </div>
+
+      <!-- UPI QR Render View -->
+      <div id="upiQrSection" style="display:none;">
+        <div class="upi-qr-card">
+          <div style="font-family:var(--font-mono); font-size:10px; color:#059669; letter-spacing:1px; margin-bottom:4px;">
+            ● CASHFREE INSTANT UPI QR SIMULATOR
+          </div>
+          <div style="font-family:var(--font-mono); font-size:18px; font-weight:600; margin-bottom:8px;" id="upiAmountDisplay">
+            ₹6,077
+          </div>
+          <div class="upi-qr-frame">
+            <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+              <rect width="180" height="180" fill="#FFFFFF"/>
+              <!-- Simulated High-Precision QR Pattern for Cashfree UPI -->
+              <rect x="15" y="15" width="45" height="45" fill="#1B1612"/>
+              <rect x="23" y="23" width="29" height="29" fill="#FFFFFF"/>
+              <rect x="30" y="30" width="15" height="15" fill="#1B1612"/>
+              
+              <rect x="120" y="15" width="45" height="45" fill="#1B1612"/>
+              <rect x="128" y="23" width="29" height="29" fill="#FFFFFF"/>
+              <rect x="135" y="30" width="15" height="15" fill="#1B1612"/>
+              
+              <rect x="15" y="120" width="45" height="45" fill="#1B1612"/>
+              <rect x="23" y="128" width="29" height="29" fill="#FFFFFF"/>
+              <rect x="30" y="135" width="15" height="15" fill="#1B1612"/>
+
+              <!-- Internal Data Cells -->
+              <rect x="75" y="20" width="12" height="12" fill="#D87A44"/>
+              <rect x="95" y="30" width="10" height="18" fill="#1B1612"/>
+              <rect x="70" y="55" width="20" height="10" fill="#1B1612"/>
+              <rect x="35" y="75" width="15" height="15" fill="#1B1612"/>
+              <rect x="58" y="75" width="25" height="12" fill="#D87A44"/>
+              <rect x="90" y="75" width="15" height="30" fill="#1B1612"/>
+              <rect x="120" y="75" width="25" height="12" fill="#1B1612"/>
+              <rect x="150" y="75" width="15" height="15" fill="#D87A44"/>
+
+              <rect x="20" y="98" width="20" height="12" fill="#1B1612"/>
+              <rect x="70" y="110" width="22" height="22" fill="#1B1612"/>
+              <rect x="100" y="115" width="15" height="15" fill="#D87A44"/>
+              <rect x="125" y="105" width="25" height="25" fill="#1B1612"/>
+              <rect x="155" y="125" width="12" height="18" fill="#1B1612"/>
+              <rect x="75" y="145" width="45" height="15" fill="#1B1612"/>
+              <rect x="130" y="145" width="20" height="15" fill="#D87A44"/>
+            </svg>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#57534E; margin-bottom:8px;">
+            Scan via GPay, PhonePe, Paytm, or BHIM
+          </div>
+          <div style="font-family:var(--font-mono); font-size:10px; color:#78716C; word-break:break-all;" id="upiStringText">
+            upi://pay?pa=botanica.apothecary@icici&pn=BOTANICA+LABS
+          </div>
+
+          <div style="margin-top:16px;">
+            <button class="btn-apothecary" style="width:100%; font-size:11px;" onclick="confirmSimulatedPayment()">
+              Confirm Payment Received (Demo Simulation)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Confirmed Success Screen -->
+      <div id="orderSuccessScreen" style="display:none; text-align:center; padding:32px 16px;">
+        <div style="font-size:32px; margin-bottom:12px;">🌿</div>
+        <h3 style="font-family:var(--font-accent); font-size:24px; margin-bottom:8px;">Formulation Dispatch Confirmed</h3>
+        <p style="font-size:13px; color:#57534E; margin-bottom:16px;">
+          Your order <strong id="confirmedOrderId">ORD-APO-5011</strong> has been queued in Cleanroom A for amber glass batch bottling.
+        </p>
+        <div style="background:#FFF; border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:11px; text-align:left; margin-bottom:20px;">
+          <div style="color:#78716C; margin-bottom:4px;">ASSIGNED BATCH LOTS</div>
+          <div id="confirmedBatchLots" style="font-weight:600; color:var(--color-dark);">LOT-2026-A12, LOT-2026-B03</div>
+        </div>
+        <button class="btn-apothecary-outline" style="width:100%;" onclick="resetCartAndClose()">
+          Return to Formulation Catalogue
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Foot Breakdown -->
+    <div class="drawer-foot" id="cartFootBreakdown" style="display:none;">
+      <div style="font-family:var(--font-mono); font-size:12px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>Subtotal:</span>
+          <span id="cartSubtotalText">₹0</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; color:#C2410C; margin-bottom:6px;" id="cartDiscountLine">
+          <span>Apothecary Discount:</span>
+          <span id="cartDiscountText">-₹0</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:15px; border-top:1px dashed var(--border-color); padding-top:6px;">
+          <span>Total:</span>
+          <span id="cartTotalText">₹0</span>
+        </div>
+      </div>
+      <button class="btn-apothecary btn-apothecary-amber" style="width:100%;" id="btnProceedCheckout" onclick="showCheckoutForm()">
+        Proceed to Dispatch & Payment
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       7. CLIENT JAVASCRIPT CONTROLLER
+       ========================================================================= -->
   <script>
-    function setConcern(btn, name) {
-      btn.parentElement.querySelectorAll('.diag-pill').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('recTxt').textContent = name === 'Dehydration' ? 'Damask Rose Barrier Serum (30ml)' : 'Midnight Lipid Elixir (50ml)';
+    // In-memory catalog cache loaded from API
+    let CATALOG = [];
+    let CART = [];
+    let quizState = {
+      skinType: 'Sensitive / Reactive',
+      concern: 'Barrier Repair',
+      texture: 'Biomimetic Rich Cream'
+    };
+
+    // Fallback products if API is initializing
+    const FALLBACK_PRODUCTS = [
+      {
+        id: 'PRD-CLN-01',
+        slug: 'botanical-barrier-defense-cleanser',
+        name: 'Botanical Barrier Defense Cleanser (Centella & Oat)',
+        subtitle: 'Formulation Series 01 • Lipid-Preserving Emulsion',
+        step_category: 'cleanse',
+        step_number: '01',
+        volume_display: '200 mL / 6.8 fl. oz.',
+        ph_level: 'pH 5.5',
+        skin_type: 'All Skin Types, Reactive & Compromised',
+        primary_concern: 'Barrier Repair',
+        texture: 'Jelly-to-Milk Emulsion',
+        price: 1850,
+        retail_price: 2400,
+        short_desc: 'A non-stripping botanical cleansing fluid fortified with bio-fermented Centella Asiatica and colloidal oat.',
+        hero_active: 'Centella Asiatica 4.5% + Colloidal Oat 3.0%',
+        image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80',
+        pao_months: 12,
+        batch_lot: 'LOT-2026-A12'
+      },
+      {
+        id: 'PRD-TRT-02',
+        slug: 'niacinamide-zinc-cellular-serum',
+        name: '10% Niacinamide + Zinc Cellular Serum',
+        subtitle: 'Formulation Series 02 • High-Potency Sebum & Pore Modulator',
+        step_category: 'treat',
+        step_number: '02',
+        volume_display: '30 mL / 1.0 fl. oz.',
+        ph_level: 'pH 5.2',
+        skin_type: 'Oily, Blemish-Prone & Texture-Irregular',
+        primary_concern: 'Blemish & Texture',
+        texture: 'Lightweight Viscous Water-Gel',
+        price: 2450,
+        retail_price: 3100,
+        short_desc: 'High-potency cellular treatment containing Nicotinamide and Zinc PCA to clarify congestion.',
+        hero_active: 'USP Niacinamide 10.0% + Zinc L-PCA 1.2%',
+        image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80',
+        pao_months: 6,
+        batch_lot: 'LOT-2025-C08'
+      },
+      {
+        id: 'PRD-MST-03',
+        slug: 'ceramide-biomimetic-restorative-cream',
+        name: 'Ceramide Biomimetic Restorative Cream',
+        subtitle: 'Formulation Series 03 • Intercellular Lipid Matrix',
+        step_category: 'moisturize',
+        step_number: '03',
+        volume_display: '50 mL / 1.7 fl. oz.',
+        ph_level: 'pH 5.8',
+        skin_type: 'Dry, Dehydrated & Compromised Barrier',
+        primary_concern: 'Deep Hydration',
+        texture: 'Biomimetic Rich Velvety Cream',
+        price: 2850,
+        retail_price: 3600,
+        short_desc: 'Physiologically matched 3:1:1 lipid replenishment matrix (Ceramides NP/AP/EOP, Cholesterol, Fatty Acids).',
+        hero_active: 'Phyto-Ceramide Complex 3.5% + Bio-Cholesterol 1.0%',
+        image_url: 'https://images.unsplash.com/photo-1608248597359-009941a5d625?auto=format&fit=crop&w=900&q=80',
+        pao_months: 12,
+        batch_lot: 'LOT-2026-B03'
+      },
+      {
+        id: 'PRD-PRF-04',
+        slug: 'santal-smoked-bergamot-edp',
+        name: 'No. 07 Santal & Smoked Bergamot Eau de Parfum',
+        subtitle: 'Apothecary Olfactory Specimen • 22% Pure Extrait Concentration',
+        step_category: 'fragrance',
+        step_number: 'SP',
+        volume_display: '50 mL / 1.7 fl. oz.',
+        ph_level: 'N/A',
+        skin_type: 'Universal Olfactory Profile',
+        primary_concern: 'Olfactory Presence',
+        texture: 'Fine Micro-Aerosol Mist',
+        price: 4600,
+        retail_price: 5800,
+        short_desc: 'Calabrian smoked bergamot with Australian album sandalwood and black amber concrete.',
+        hero_active: 'Australian Sandalwood Heartwood 18% + Calabrian Bergamot',
+        image_url: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80',
+        pao_months: 24,
+        batch_lot: 'LOT-2026-D01'
+      },
+      {
+        id: 'PRD-ELX-05',
+        slug: 'cold-pressed-bakuchiol-night-elixir',
+        name: 'Cold-Pressed Bakuchiol Night Elixir',
+        subtitle: 'Formulation Series 05 • Phyto-Retinoid Cellular Regeneration',
+        step_category: 'treat',
+        step_number: '02B',
+        volume_display: '30 mL / 1.0 fl. oz.',
+        ph_level: 'pH 5.0',
+        skin_type: 'Sensitive, Aging & Photo-Damaged Skin',
+        primary_concern: 'Fine Lines & Elasticity',
+        texture: 'Silky Dry Botanical Oil',
+        price: 3400,
+        retail_price: 4200,
+        short_desc: 'Pure 2% monoterpenoid Bakuchiol infused in cold-pressed Marula and Rosehip seed oils.',
+        hero_active: 'Pure Phyto-Bakuchiol 2.0% + Organic Marula Oil',
+        image_url: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=900&q=80',
+        pao_months: 6,
+        batch_lot: 'LOT-2026-E05'
+      }
+    ];
+
+    async function loadCatalog() {
+      try {
+        const res = await fetch('/api/products');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.catalog && data.catalog.length > 0) {
+            CATALOG = data.catalog;
+            renderProductGrid();
+            renderSpecimenTable();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('API fetch fallback:', e);
+      }
+      CATALOG = FALLBACK_PRODUCTS;
+      renderProductGrid();
+      renderSpecimenTable();
     }
+
+    function renderProductGrid() {
+      const grid = document.getElementById('productGrid');
+      if (!grid) return;
+
+      grid.innerHTML = CATALOG.map(p => `
+        <article class="apothecary-card">
+          <div class="card-img-wrap">
+            <img src="${p.image_url}" alt="${p.name}" loading="lazy">
+            <span class="card-lot-badge">${p.batch_lot || 'LOT-2026'}</span>
+            <span class="card-step-badge">STEP ${p.step_number || '01'}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta-line">
+              <span>${p.volume_display || (p.volume_ml + ' mL')}</span>
+              <span>${p.ph_level || 'pH 5.5'}</span>
+            </div>
+            <h3 class="card-title">${p.name}</h3>
+            <p class="card-desc">${p.short_desc}</p>
+            <div class="card-actives">
+              <strong>HERO ACTIVE:</strong> ${p.hero_active}
+            </div>
+            <div class="card-foot">
+              <div class="card-price">₹${p.price.toLocaleString('en-IN')}</div>
+              <div class="card-btns">
+                <button class="btn-sm" onclick="openInciModal('${p.id}')">INCI Ledger</button>
+                <button class="btn-sm btn-sm-primary" onclick="quickAddToCart('${p.id}')">+ Acquire</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderSpecimenTable() {
+      const tbody = document.getElementById('specimenTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = CATALOG.map(p => `
+        <tr>
+          <td><code style="color:var(--color-primary);">${p.id}</code></td>
+          <td>
+            <span class="specimen-name">${p.name}</span>
+            <span class="specimen-sub">${p.hero_active}</span>
+          </td>
+          <td><span style="text-transform:uppercase;">${p.step_category}</span></td>
+          <td>${p.ph_level}</td>
+          <td><span class="badge-pao"><span class="badge-ewg"></span> ${p.pao_months || 12}M</span></td>
+          <td><code>${p.batch_lot || 'LOT-2026'}</code></td>
+          <td><strong>₹${p.price.toLocaleString('en-IN')}</strong></td>
+          <td style="text-align:right;">
+            <button class="btn-sm" onclick="openInciModal('${p.id}')" style="margin-right:4px;">INCI</button>
+            <button class="btn-sm btn-sm-primary" onclick="quickAddToCart('${p.id}')">Acquire</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // --- QUIZ FUNCTIONS ---
+    function openQuizDrawer() {
+      document.getElementById('quizOverlay').classList.add('open');
+      document.getElementById('quizDrawer').classList.add('open');
+      document.getElementById('quizFormContainer').style.display = 'block';
+      document.getElementById('quizResultContainer').style.display = 'none';
+      document.getElementById('quizFooterActions').style.display = 'block';
+    }
+
+    function closeQuizDrawer() {
+      document.getElementById('quizOverlay').classList.remove('open');
+      document.getElementById('quizDrawer').classList.remove('open');
+    }
+
+    function selectQuizOption(category, value, btn) {
+      quizState[category] = value;
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-option-btn').forEach(b => {
+        b.classList.remove('selected');
+        b.querySelector('span:last-child').textContent = '○';
+      });
+      btn.classList.add('selected');
+      btn.querySelector('span:last-child').textContent = '●';
+    }
+
+    async function submitSkinQuiz() {
+      const name = document.getElementById('quizLeadName').value || 'Guest';
+      const phone = document.getElementById('quizLeadPhone').value || '919847112233';
+
+      const payload = {
+        name,
+        phone,
+        skinType: quizState.skinType,
+        concern: quizState.concern,
+        texture: quizState.texture
+      };
+
+      try {
+        const res = await fetch('/api/quiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          renderQuizResult(data);
+          return;
+        }
+      } catch (err) {
+        console.warn('Quiz API error, fallback local logic:', err);
+      }
+
+      // Local fallback calculation
+      const cleanser = CATALOG.find(p => p.id === 'PRD-CLN-01') || FALLBACK_PRODUCTS[0];
+      const treatment = (quizState.concern === 'Fine Lines & Elasticity' || quizState.skinType.includes('Mature'))
+        ? (CATALOG.find(p => p.id === 'PRD-ELX-05') || FALLBACK_PRODUCTS[4])
+        : (CATALOG.find(p => p.id === 'PRD-TRT-02') || FALLBACK_PRODUCTS[1]);
+      const moisturizer = CATALOG.find(p => p.id === 'PRD-MST-03') || FALLBACK_PRODUCTS[2];
+
+      const subtotal = cleanser.price + treatment.price + moisturizer.price;
+      const discount = Math.round(subtotal * 0.15);
+      const total = subtotal - discount;
+
+      const dummyResult = {
+        customer: { name, phone },
+        diagnosticInput: quizState,
+        routine: { step1: cleanser, step2: treatment, step3: moisturizer },
+        pricing: { subtotal, discount, total },
+        whatsappFollowUpUrl: `https://wa.me/${phone}?text=Botanica%20Consultation%20Routine`
+      };
+      renderQuizResult(dummyResult);
+    }
+
+    function renderQuizResult(data) {
+      document.getElementById('quizFormContainer').style.display = 'none';
+      document.getElementById('quizFooterActions').style.display = 'none';
+      document.getElementById('quizResultContainer').style.display = 'block';
+
+      document.getElementById('prescribedCustomerTitle').textContent = `Prescription for ${data.customer.name}`;
+      document.getElementById('prescribedSummaryTxt').textContent = `Tailored for ${data.diagnosticInput.concern} (${data.diagnosticInput.skinType}) with a ${data.diagnosticInput.texture} profile.`;
+
+      const list = document.getElementById('prescribedItemsList');
+      const r = data.routine;
+      list.innerHTML = `
+        <div class="prescription-item">
+          <div><code style="color:var(--color-primary);">STEP 1</code></div>
+          <div style="flex:1;">
+            <div style="font-weight:600;">${r.step1.name}</div>
+            <div style="font-size:11px; color:#78716C;">Cleanse & fortify stratum corneum • ₹${r.step1.price}</div>
+          </div>
+        </div>
+        <div class="prescription-item">
+          <div><code style="color:var(--color-primary);">STEP 2</code></div>
+          <div style="flex:1;">
+            <div style="font-weight:600;">${r.step2.name}</div>
+            <div style="font-size:11px; color:#78716C;">Targeted cellular modulation • ₹${r.step2.price}</div>
+          </div>
+        </div>
+        <div class="prescription-item">
+          <div><code style="color:var(--color-primary);">STEP 3</code></div>
+          <div style="flex:1;">
+            <div style="font-weight:600;">${r.step3.name}</div>
+            <div style="font-size:11px; color:#78716C;">Biomimetic 3:1:1 lipid replenishment • ₹${r.step3.price}</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('prescribedSubtotal').textContent = `₹${data.pricing.subtotal.toLocaleString('en-IN')}`;
+      document.getElementById('prescribedDiscount').textContent = `-₹${data.pricing.discount.toLocaleString('en-IN')}`;
+      document.getElementById('prescribedTotal').textContent = `₹${data.pricing.total.toLocaleString('en-IN')}`;
+      
+      const waLink = document.getElementById('prescribedWaLink');
+      if (data.whatsappFollowUpUrl) {
+        waLink.href = data.whatsappFollowUpUrl;
+      }
+
+      window.__lastPrescription = [r.step1, r.step2, r.step3];
+    }
+
+    function addPrescribedRoutineToCart() {
+      if (window.__lastPrescription && window.__lastPrescription.length === 3) {
+        window.__lastPrescription.forEach(p => {
+          addToCart(p, 1);
+        });
+        closeQuizDrawer();
+        openCartDrawer();
+      }
+    }
+
+    // --- BUNDLE DRAWER FUNCTIONS ---
+    function openBundleDrawer() {
+      document.getElementById('bundleOverlay').classList.add('open');
+      document.getElementById('bundleDrawer').classList.add('open');
+      updateBundleCalculations();
+    }
+
+    function closeBundleDrawer() {
+      document.getElementById('bundleOverlay').classList.remove('open');
+      document.getElementById('bundleDrawer').classList.remove('open');
+    }
+
+    function updateBundleCalculations() {
+      const cleanser = CATALOG.find(p => p.id === 'PRD-CLN-01') || FALLBACK_PRODUCTS[0];
+      const selectedTreatId = document.querySelector('input[name="bundleTreatment"]:checked')?.value || 'PRD-TRT-02';
+      const treatment = CATALOG.find(p => p.id === selectedTreatId) || FALLBACK_PRODUCTS[1];
+      const moisturizer = CATALOG.find(p => p.id === 'PRD-MST-03') || FALLBACK_PRODUCTS[2];
+
+      const subtotal = cleanser.price + treatment.price + moisturizer.price;
+      const discount = Math.round(subtotal * 0.15);
+      const total = subtotal - discount;
+
+      document.getElementById('bundleDrawerSubtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      document.getElementById('bundleDrawerDiscount').textContent = `-₹${discount.toLocaleString('en-IN')}`;
+      document.getElementById('bundleDrawerTotal').textContent = `₹${total.toLocaleString('en-IN')}`;
+      document.getElementById('bundleDrawerBtnPrice').textContent = `₹${total.toLocaleString('en-IN')}`;
+
+      window.__activeBundleSelection = [cleanser, treatment, moisturizer];
+    }
+
+    function addCustomBundleToCart() {
+      if (window.__activeBundleSelection) {
+        window.__activeBundleSelection.forEach(p => {
+          addToCart(p, 1);
+        });
+        closeBundleDrawer();
+        openCartDrawer();
+      }
+    }
+
+    // --- INCI LEDGER MODAL ---
+    async function openInciModal(productId) {
+      document.getElementById('inciOverlay').classList.add('open');
+      document.getElementById('inciModal').classList.add('open');
+
+      const prod = CATALOG.find(p => p.id === productId);
+      document.getElementById('inciModalTitle').textContent = prod ? `${prod.name} — INCI Ledger` : 'INCI Cosmetic Ledger';
+
+      const content = document.getElementById('inciLedgerContent');
+      content.innerHTML = '<div style="font-family:var(--font-mono); font-size:11px; color:#78716C;">Retrieving certified ingredient register...</div>';
+
+      let inciList = prod && prod.inci_ledger ? prod.inci_ledger : null;
+
+      if (!inciList) {
+        try {
+          const res = await fetch(`/api/products?id=${productId}`);
+          if (res.ok) {
+            const data = await res.json();
+            inciList = data.inci_ledger;
+          }
+        } catch (e) {}
+      }
+
+      if (!inciList || inciList.length === 0) {
+        inciList = [
+          { rank_order: 1, scientific_name: 'Aqua / Water / Eau', common_name: 'Purified Water', function_role: 'Solvent Base', ewg_score: 1, source_origin: 'Double Reverse-Osmosis' },
+          { rank_order: 2, scientific_name: 'Bio-Fermented Botanical Active', common_name: 'Plant Extract', function_role: 'Barrier Fortification', ewg_score: 1, source_origin: 'Clean Laboratory Fermentation' },
+          { rank_order: 3, scientific_name: 'Phytosphingosine & Tocopherol', common_name: 'Vitamin E & Lipids', function_role: 'Lipid Replication', ewg_score: 1, source_origin: 'Non-GMO Botanical Seed Press' }
+        ];
+      }
+
+      content.innerHTML = `
+        <table class="inci-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Scientific Nomenclature</th>
+              <th>Common Name</th>
+              <th>Physiological Role</th>
+              <th>EWG Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${inciList.map(item => `
+              <tr>
+                <td>${item.rank_order}</td>
+                <td><strong>${item.scientific_name}</strong><br><span style="font-size:10px; color:#78716C;">${item.source_origin || ''}</span></td>
+                <td>${item.common_name || '—'}</td>
+                <td>${item.function_role}</td>
+                <td>
+                  <span style="display:inline-flex; align-items:center; gap:4px; font-weight:600; color:#059669;">
+                    <span class="badge-ewg"></span> ${item.ewg_score || 1}
+                  </span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function closeInciModal() {
+      document.getElementById('inciOverlay').classList.remove('open');
+      document.getElementById('inciModal').classList.remove('open');
+    }
+
+    // --- CART & DISPATCH FUNCTIONS ---
+    function openCartDrawer() {
+      document.getElementById('cartOverlay').classList.add('open');
+      document.getElementById('cartDrawer').classList.add('open');
+      renderCartUI();
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartOverlay').classList.remove('open');
+      document.getElementById('cartDrawer').classList.remove('open');
+    }
+
+    function quickAddToCart(productId) {
+      const prod = CATALOG.find(p => p.id === productId) || FALLBACK_PRODUCTS.find(p => p.id === productId);
+      if (prod) {
+        addToCart(prod, 1);
+        openCartDrawer();
+      }
+    }
+
+    function addToCart(product, qty = 1) {
+      const existing = CART.find(item => item.id === product.id);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        CART.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image_url: product.image_url,
+          batch_lot: product.batch_lot || 'LOT-2026',
+          pao_months: product.pao_months || 12,
+          qty
+        });
+      }
+      updateCartBadge();
+    }
+
+    function removeFromCart(productId) {
+      CART = CART.filter(item => item.id !== productId);
+      updateCartBadge();
+      renderCartUI();
+    }
+
+    function updateCartBadge() {
+      const count = CART.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartBadgeCount').textContent = count;
+      document.getElementById('cartDrawerCount').textContent = count;
+    }
+
+    function renderCartUI() {
+      const list = document.getElementById('cartItemsList');
+      const foot = document.getElementById('cartFootBreakdown');
+      const formBox = document.getElementById('checkoutFormBox');
+      const upiSection = document.getElementById('upiQrSection');
+      const successScreen = document.getElementById('orderSuccessScreen');
+
+      formBox.style.display = 'none';
+      upiSection.style.display = 'none';
+      successScreen.style.display = 'none';
+
+      if (CART.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center; padding:48px 0; color:#78716C; font-family:var(--font-mono); font-size:12px;">
+            Your apothecary bag is currently empty.
+          </div>
+        `;
+        foot.style.display = 'none';
+        return;
+      }
+
+      foot.style.display = 'flex';
+      list.innerHTML = CART.map(item => `
+        <div class="cart-item">
+          <img src="${item.image_url}" class="cart-item-img" alt="${item.name}">
+          <div class="cart-item-info">
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-meta">${item.batch_lot} • PAO ${item.pao_months}M</div>
+            <div class="cart-item-price">₹${item.price.toLocaleString('en-IN')} × ${item.qty}</div>
+          </div>
+          <button style="background:none; border:none; color:#78716C; cursor:pointer; font-size:16px; padding:4px;" onclick="removeFromCart('${item.id}')">✕</button>
+        </div>
+      `).join('');
+
+      // Calculate subtotal & 15% discount if 3+ items
+      const totalUnits = CART.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = CART.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const isBundle = totalUnits >= 3;
+      const discount = isBundle ? Math.round(subtotal * 0.15) : 0;
+      const total = subtotal - discount;
+
+      document.getElementById('cartSubtotalText').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      const discLine = document.getElementById('cartDiscountLine');
+      if (isBundle) {
+        discLine.style.display = 'flex';
+        document.getElementById('cartDiscountText').textContent = `-₹${discount.toLocaleString('en-IN')} (15% Routine Discount)`;
+      } else {
+        discLine.style.display = 'none';
+      }
+      document.getElementById('cartTotalText').textContent = `₹${total.toLocaleString('en-IN')}`;
+
+      window.__cartCalculated = { subtotal, discount, total, isBundle };
+    }
+
+    function showCheckoutForm() {
+      document.getElementById('checkoutFormBox').style.display = 'block';
+      document.getElementById('btnProceedCheckout').style.display = 'none';
+    }
+
+    async function executeCheckoutOrder() {
+      const name = document.getElementById('custNameInput').value || 'Meera Nair';
+      const phone = document.getElementById('custPhoneInput').value || '919846001122';
+      const address = document.getElementById('custAddressInput').value || 'Kochi';
+
+      const payload = {
+        channel: 'online',
+        customer: { name, phone, address },
+        items: CART.map(i => ({ id: i.id, qty: i.qty })),
+        isBundle: window.__cartCalculated ? window.__cartCalculated.isBundle : false
+      };
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          displayUpiQr(data);
+          return;
+        } else {
+          const errData = await res.json();
+          alert(errData.message || 'Checkout failed');
+          return;
+        }
+      } catch (err) {
+        console.warn('Checkout API fallback simulation:', err);
+      }
+
+      // Local fallback simulation
+      const orderId = `ORD-APO-${Math.floor(1000 + Math.random() * 9000)}`;
+      const total = window.__cartCalculated ? window.__cartCalculated.total : 6077;
+      const data = {
+        orderId,
+        totalAmount: total,
+        batchLotsAssigned: ['LOT-2026-A12', 'LOT-2026-B03'],
+        cashfreeSimulation: {
+          upiQrString: `upi://pay?pa=botanica.apothecary@icici&pn=BOTANICA+LABS&am=${total}&cu=INR&tn=${orderId}`
+        }
+      };
+      displayUpiQr(data);
+    }
+
+    function displayUpiQr(data) {
+      document.getElementById('checkoutFormBox').style.display = 'none';
+      document.getElementById('upiQrSection').style.display = 'block';
+      document.getElementById('upiAmountDisplay').textContent = `₹${data.totalAmount.toLocaleString('en-IN')}`;
+      document.getElementById('upiStringText').textContent = data.cashfreeSimulation.upiQrString;
+
+      window.__pendingOrder = data;
+    }
+
+    function confirmSimulatedPayment() {
+      const data = window.__pendingOrder || {};
+      document.getElementById('upiQrSection').style.display = 'none';
+      document.getElementById('cartFootBreakdown').style.display = 'none';
+      document.getElementById('cartItemsList').style.display = 'none';
+      document.getElementById('orderSuccessScreen').style.display = 'block';
+
+      document.getElementById('confirmedOrderId').textContent = data.orderId || 'ORD-APO-5011';
+      document.getElementById('confirmedBatchLots').textContent = Array.isArray(data.batchLotsAssigned) ? data.batchLotsAssigned.join(', ') : 'LOT-2026-A12';
+
+      CART = [];
+      updateCartBadge();
+    }
+
+    function resetCartAndClose() {
+      document.getElementById('cartItemsList').style.display = 'block';
+      document.getElementById('btnProceedCheckout').style.display = 'block';
+      closeCartDrawer();
+      renderCartUI();
+    }
+
+    // Initialize on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCatalog();
+    });
   </script>
 </body>
 </html>

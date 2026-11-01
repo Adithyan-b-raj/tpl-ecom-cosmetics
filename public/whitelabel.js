@@ -40,6 +40,7 @@
     if (params.has('dark')) updated.dark = sanitizeHex(params.get('dark'));
     if (params.has('bg')) updated.bg = sanitizeHex(params.get('bg'));
     if (params.has('wa')) updated.wa = sanitizePhone(params.get('wa'));
+    if (params.has('phone')) updated.wa = sanitizePhone(params.get('phone'));
     if (params.has('logo')) updated.logo = params.get('logo').trim();
 
     try {
@@ -152,7 +153,7 @@
 
     // Propagate query params across internal links (index.html <-> admin.html)
     var qs = new URLSearchParams();
-    ['brand', 'tagline', 'primary', 'dark', 'bg', 'wa', 'logo'].forEach(function (k) {
+    ['brand', 'tagline', 'primary', 'dark', 'bg', 'wa', 'phone', 'logo'].forEach(function (k) {
       if (cfg[k]) qs.set(k, cfg[k]);
     });
     var qsStr = qs.toString();

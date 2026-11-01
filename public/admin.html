@@ -2,18 +2,1011 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title data-wl-brand>BOTANICA // Batch Lots & Expiry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-wl-brand>BOTANICA // Formulation Batch Lots & Quality Control</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="theme-tokens.css">
   <script src="whitelabel.js"></script>
+
   <style>
-    body { background: #FAF7F2; color: #1C1917; font-family: monospace; padding: 24px; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main, #F7F4EE);
+      color: var(--color-dark, #1B1612);
+      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+      font-size: 13px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Fixed Left 240px Admin Rail */
+    .admin-rail {
+      width: 240px;
+      min-width: 240px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: var(--bg-rail, #F2ECE1);
+      border-right: 1px solid var(--border-color, #E2D9C8);
+      padding: 36px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+      font-size: 11px;
+      z-index: 50;
+      overflow-y: auto;
+    }
+
+    .brand-wordmark {
+      font-family: var(--font-accent, 'Cormorant Garamond', serif);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--color-dark, #1B1612);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .admin-sub {
+      font-size: 10px;
+      color: #78716C;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+    }
+
+    .admin-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .admin-nav a {
+      color: #57534E;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      transition: color 0.15s ease;
+    }
+    .admin-nav a:hover, .admin-nav a.active {
+      color: var(--color-dark, #1B1612);
+      font-weight: 600;
+    }
+
+    .admin-main {
+      flex: 1;
+      max-width: 1200px;
+      padding: 48px 60px 80px;
+      background: var(--bg-main, #F7F4EE);
+      overflow-x: hidden;
+    }
+
+    .page-title {
+      font-family: var(--font-accent);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--color-dark, #1B1612);
+      margin-bottom: 8px;
+    }
+
+    .page-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #78716C;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* KPI Summary Cards */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .kpi-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 20px;
+      font-family: var(--font-mono);
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #78716C;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .kpi-val {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--color-dark, #1B1612);
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: #78716C;
+      margin-top: 4px;
+    }
+
+    /* Tabular Layouts */
+    .table-container {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      margin-bottom: 48px;
+      overflow-x: auto;
+    }
+
+    .table-head-bar {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAF7F2;
+    }
+
+    .table-title {
+      font-family: var(--font-accent);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--color-dark, #1B1612);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .admin-table th {
+      background: #FAF7F2;
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #78716C;
+      text-transform: uppercase;
+    }
+
+    .admin-table td {
+      border-bottom: 1px solid var(--border-color, #E2D9C8);
+      padding: 14px;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background-color: rgba(242, 236, 225, 0.4);
+    }
+
+    /* Badges */
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .badge-fresh {
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+    .badge-warning {
+      background: #FFFBEB;
+      color: #92400E;
+      border: 1px solid #FDE68A;
+    }
+    .badge-danger {
+      background: #FEF2F2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
+    /* Buttons */
+    .btn-action {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      cursor: pointer;
+      color: var(--color-dark, #1B1612);
+      transition: all 0.15s ease;
+    }
+    .btn-action:hover {
+      background: var(--color-dark, #1B1612);
+      color: #FFF;
+    }
+    .btn-action-quarantine {
+      color: #991B1B;
+      border-color: #FCA5A5;
+    }
+    .btn-action-quarantine:hover {
+      background: #991B1B;
+      color: #FFF;
+    }
+    .btn-action-release {
+      color: #065F46;
+      border-color: #6EE7B7;
+    }
+    .btn-action-release:hover {
+      background: #065F46;
+      color: #FFF;
+    }
+
+    /* WhatsApp Button */
+    .btn-wa-followup {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #25D366;
+      color: #FFF;
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 2px;
+    }
+    .btn-wa-followup:hover {
+      background: #1EBE5D;
+    }
+
+    /* Demand Forecasting Visual Cards */
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .forecast-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 20px;
+      font-family: var(--font-mono);
+    }
+
+    .forecast-prod-title {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .forecast-bar-wrap {
+      background: #F2ECE1;
+      height: 8px;
+      width: 100%;
+      margin: 12px 0;
+      position: relative;
+    }
+
+    .forecast-bar-fill {
+      height: 100%;
+      background: var(--color-sage, #4A5844);
+      transition: width 0.3s ease;
+    }
+    .forecast-bar-fill.warning {
+      background: #D97706;
+    }
+    .forecast-bar-fill.critical {
+      background: #DC2626;
+    }
+
+    /* Apothecary Counter POS simulator */
+    .pos-counter-card {
+      background: #FFF;
+      border: 1px solid var(--border-color, #E2D9C8);
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      .admin-rail {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        position: relative;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .admin-main { padding: 32px 20px; }
+      .admin-nav { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+    }
   </style>
 </head>
-<body data-layout-archetype="apothecary-admin">
-  <h2><span data-wl-brand>BOTANICA</span> — Formulation Batch Expiry & Lot Ledger</h2>
-  <div style="background:#FFF; border:1px solid #E2D9C8; padding:20px; margin-top:20px;">
-    <div>BATCH #BT-2026-04 — 500 BOTTLES PRODUCED</div>
-    <div style="color:#0D9488; margin-top:6px;">● QC PASSED · STABILITY VERIFIED</div>
-  </div>
+
+<body data-layout-archetype="batch-lot-admin">
+
+  <!-- =========================================================================
+       1. FIXED LEFT 240px ADMIN RAIL
+       ========================================================================= -->
+  <aside class="admin-rail">
+    <div>
+      <a href="index.html" class="brand-wordmark" data-wl-brand>BOTANICA</a>
+      <div class="admin-sub">Batch Lots & Cleanroom Hub</div>
+
+      <ul class="admin-nav">
+        <li><a href="#batches" class="active">01 / BATCH LOTS</a></li>
+        <li><a href="#leads">02 / CONSULT INQUIRIES</a></li>
+        <li><a href="#forecast">03 / VELOCITY FORECAST</a></li>
+        <li><a href="#pos">04 / COUNTER POS DISPENSE</a></li>
+        <li><a href="index.html">← VIEW STOREFRONT</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div style="font-size:10px; color:#78716C; margin-bottom:12px; border-top:1px solid var(--border-color); padding-top:16px;">
+        CLEANROOM WORKSPACE
+        <div>Air Quality: ISO Class 7</div>
+        <div>Temp: 21.2°C • Humidity: 46%</div>
+      </div>
+      <div>
+        <label style="font-size:10px; color:#78716C; display:block; margin-bottom:4px;">WhatsApp Operator</label>
+        <input type="text" id="adminWaInput" value="919061902295" style="width:100%; padding:6px 8px; border:1px solid var(--border-color); background:#FFF; font-family:var(--font-mono); font-size:10px;" onchange="updateOperatorPhone(this.value)">
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. MAIN APOTHECARY ADMIN WORKSPACE
+       ========================================================================= -->
+  <main class="admin-main">
+
+    <header>
+      <h1 class="page-title"><span data-wl-brand>BOTANICA</span> — Formulation Batch & Expiry Tracker</h1>
+      <div class="page-meta">
+        <div>
+          ISO-14644 CERTIFIED PRODUCTION LEDGER • PAO & SHELF LIFE FORECASTING
+        </div>
+        <div id="liveClockDisplay" style="color:var(--color-primary); font-weight:600;">
+          2026-11-01 • REAL-TIME EDGE D1 MONITOR
+        </div>
+      </div>
+    </header>
+
+    <!-- Top KPI Cards -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Active Formulations</div>
+        <div class="kpi-val" id="kpiActiveFormulations">5</div>
+        <div class="kpi-sub">Cleanroom Series 01—05</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Monitored Batch Lots</div>
+        <div class="kpi-val" id="kpiTotalLots">6</div>
+        <div class="kpi-sub" id="kpiLotSub">4 Fresh • 1 Near Expiry • 1 Quarantined</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Consultation Inquiries</div>
+        <div class="kpi-val" id="kpiTotalLeads">3</div>
+        <div class="kpi-sub">Skin Diagnostic Quiz Leads</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Daily Depletion Velocity</div>
+        <div class="kpi-val">13.6 <span style="font-size:14px; font-weight:400;">btl/day</span></div>
+        <div class="kpi-sub">Across All Formulation Runs</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Batch Lot & Expiry Date Tracker Table -->
+    <section id="batches" class="table-container">
+      <div class="table-head-bar">
+        <div>
+          <h2 class="table-title">Batch Lots & Expiry Date Tracker</h2>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#78716C;">
+            Period After Opening (PAO) • Real-Time Shelf-Life Status
+          </div>
+        </div>
+        <div>
+          <button class="btn-action" onclick="refreshBatchData()">↻ Sync Cleanroom Lots</button>
+        </div>
+      </div>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Batch No.</th>
+            <th>Formulation Asset</th>
+            <th>Manufacture</th>
+            <th>Expiry Date</th>
+            <th>PAO</th>
+            <th>Remaining / Total</th>
+            <th>Shelf-Life Status</th>
+            <th>Run-Out Forecast</th>
+            <th style="text-align:right;">QC Controls</th>
+          </tr>
+        </thead>
+        <tbody id="batchLotTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 2: Reorder Demand Forecasting & Depletion Velocity Predictor -->
+    <section id="forecast">
+      <div class="table-head-bar" style="background:#FFF; border:1px solid var(--border-color); border-bottom:none; margin-bottom:0;">
+        <div>
+          <h2 class="table-title">Reorder Demand Forecasting & Depletion Velocity</h2>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#78716C;">
+            Predictive stock-out dates based on current cleanroom sales velocity
+          </div>
+        </div>
+      </div>
+
+      <div class="forecast-grid" id="forecastCardsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Section 3: Skincare Consultation Inquiries Table -->
+    <section id="leads" class="table-container">
+      <div class="table-head-bar">
+        <div>
+          <h2 class="table-title">Skincare Consultation Inquiries</h2>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#78716C;">
+            Submissions captured live through the 3-Step Interactive Skin Diagnostic Quiz
+          </div>
+        </div>
+        <div>
+          <button class="btn-action" onclick="refreshLeadsData()">↻ Sync Inquiries</button>
+        </div>
+      </div>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Lead Ref</th>
+            <th>Client Name</th>
+            <th>WhatsApp Mobile</th>
+            <th>Skin Baseline</th>
+            <th>Primary Target Concern</th>
+            <th>Prescribed 3-Piece Regimen</th>
+            <th>Prescribed Value</th>
+            <th style="text-align:right;">Follow-Up Protocol</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 4: Apothecary Counter POS Dispenser -->
+    <section id="pos" class="pos-counter-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+        <div>
+          <h2 class="table-title">Apothecary Flagship Counter POS Dispense</h2>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#78716C;">
+            Instant in-store bottle dispense with automated batch lot assignment and thermal receipt
+          </div>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:#059669;">
+          ● REGISTER #01 • READY
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:24px;">
+        <div>
+          <label style="font-family:var(--font-mono); font-size:11px; font-weight:600; display:block; margin-bottom:6px;">Select Formulation for Dispense</label>
+          <select id="posProductSelect" class="quiz-input-field" style="margin-bottom:12px; padding:10px;" onchange="updatePosPrice()">
+            <option value="PRD-CLN-01">Botanical Barrier Defense Cleanser (200 mL) — ₹1,850 [LOT-2026-A12]</option>
+            <option value="PRD-TRT-02">10% Niacinamide + Zinc Cellular Serum (30 mL) — ₹2,450 [LOT-2025-C08]</option>
+            <option value="PRD-MST-03">Ceramide Biomimetic Restorative Cream (50 mL) — ₹2,850 [LOT-2026-B03]</option>
+            <option value="PRD-PRF-04">No. 07 Santal & Smoked Bergamot EDP (50 mL) — ₹4,600 [LOT-2026-D01]</option>
+            <option value="PRD-ELX-05">Cold-Pressed Bakuchiol Night Elixir (30 mL) — ₹3,400 [LOT-2026-E05]</option>
+          </select>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+            <div>
+              <label style="font-family:var(--font-mono); font-size:10px; color:#78716C;">Client Identifier / Walk-In</label>
+              <input type="text" id="posClientName" class="quiz-input-field" value="Walk-In Patron" style="margin-top:4px;">
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono); font-size:10px; color:#78716C;">Quantity</label>
+              <input type="number" id="posQty" class="quiz-input-field" value="1" min="1" max="10" style="margin-top:4px;" onchange="updatePosPrice()">
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#FAF7F2; border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:11px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="color:#78716C; margin-bottom:4px;">COUNTER TICKET TOTAL</div>
+            <div style="font-size:24px; font-weight:600; color:var(--color-dark);" id="posTotalDisplay">₹1,850</div>
+            <div style="color:#059669; font-size:10px; margin-top:4px;">QC VERIFIED BATCH ASSIGNED</div>
+          </div>
+          <button class="btn-action" style="background:var(--color-dark); color:#FFF; padding:10px; width:100%; margin-top:16px;" onclick="dispenseCounterPos()">
+            Dispense & Print Apothecary Receipt
+          </button>
+        </div>
+      </div>
+
+      <div id="posReceiptTape" style="display:none; background:#FFF; border:1px dashed var(--border-color); padding:16px; margin-top:20px; font-family:var(--font-mono); font-size:11px; max-width:400px;">
+        <!-- Thermal Receipt Tape -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       3. CLIENT SCRIPT CONTROLLER
+       ========================================================================= -->
+  <script>
+    let BATCH_LOTS = [];
+    let LEADS = [];
+
+    // Fallback batch lots
+    const FALLBACK_BATCHES = [
+      {
+        id: 'LOT-2026-A12',
+        batch_number: 'LOT-2026-A12',
+        product_id: 'PRD-CLN-01',
+        product_name: 'Botanical Barrier Defense Cleanser',
+        manufacture_date: '2026-02-10',
+        expiry_date: '2028-02-10',
+        pao_months: 12,
+        quantity_produced: 800,
+        quantity_remaining: 342,
+        daily_velocity: 4.2,
+        computed_status: 'active',
+        status_badge: '🟢 Fresh',
+        alert_level: 'fresh',
+        days_remaining: 466,
+        run_out_days: 81,
+        estimated_depletion_date: '2027-01-21',
+        reorder_urgency: 'STABLE RUN'
+      },
+      {
+        id: 'LOT-2025-C08',
+        batch_number: 'LOT-2025-C08',
+        product_id: 'PRD-TRT-02',
+        product_name: '10% Niacinamide + Zinc Cellular Serum',
+        manufacture_date: '2025-01-15',
+        expiry_date: '2026-12-15',
+        pao_months: 6,
+        quantity_produced: 600,
+        quantity_remaining: 85,
+        daily_velocity: 3.8,
+        computed_status: 'near_expiry',
+        status_badge: '🟡 Expiring in 44 Days',
+        alert_level: 'warning',
+        days_remaining: 44,
+        run_out_days: 22,
+        estimated_depletion_date: '2026-11-23',
+        reorder_urgency: 'URGENT CLEANROOM REORDER'
+      },
+      {
+        id: 'LOT-2026-B03',
+        batch_number: 'LOT-2026-B03',
+        product_id: 'PRD-MST-03',
+        product_name: 'Ceramide Biomimetic Restorative Cream',
+        manufacture_date: '2026-03-01',
+        expiry_date: '2028-03-01',
+        pao_months: 12,
+        quantity_produced: 750,
+        quantity_remaining: 420,
+        daily_velocity: 3.5,
+        computed_status: 'active',
+        status_badge: '🟢 Fresh',
+        alert_level: 'fresh',
+        days_remaining: 485,
+        run_out_days: 120,
+        estimated_depletion_date: '2027-03-01',
+        reorder_urgency: 'STABLE RUN'
+      },
+      {
+        id: 'LOT-2026-D01',
+        batch_number: 'LOT-2026-D01',
+        product_id: 'PRD-PRF-04',
+        product_name: 'No. 07 Santal & Smoked Bergamot EDP',
+        manufacture_date: '2026-04-12',
+        expiry_date: '2029-04-12',
+        pao_months: 24,
+        quantity_produced: 400,
+        quantity_remaining: 188,
+        daily_velocity: 2.1,
+        computed_status: 'active',
+        status_badge: '🟢 Fresh',
+        alert_level: 'fresh',
+        days_remaining: 892,
+        run_out_days: 90,
+        estimated_depletion_date: '2027-01-30',
+        reorder_urgency: 'STABLE RUN'
+      },
+      {
+        id: 'LOT-2025-Q99',
+        batch_number: 'LOT-2025-Q99',
+        product_id: 'PRD-ELX-05',
+        product_name: 'Cold-Pressed Bakuchiol Night Elixir',
+        manufacture_date: '2025-11-20',
+        expiry_date: '2027-11-20',
+        pao_months: 6,
+        quantity_produced: 300,
+        quantity_remaining: 120,
+        daily_velocity: 0.0,
+        computed_status: 'quarantined',
+        status_badge: '🔴 Quarantined',
+        alert_level: 'danger',
+        days_remaining: 384,
+        run_out_days: 999,
+        estimated_depletion_date: 'N/A',
+        reorder_urgency: 'HOLD: QC INVESTIGATION'
+      },
+      {
+        id: 'LOT-2026-E05',
+        batch_number: 'LOT-2026-E05',
+        product_id: 'PRD-ELX-05',
+        product_name: 'Cold-Pressed Bakuchiol Night Elixir',
+        manufacture_date: '2026-05-18',
+        expiry_date: '2028-05-18',
+        pao_months: 6,
+        quantity_produced: 500,
+        quantity_remaining: 295,
+        daily_velocity: 2.8,
+        computed_status: 'active',
+        status_badge: '🟢 Fresh',
+        alert_level: 'fresh',
+        days_remaining: 563,
+        run_out_days: 105,
+        estimated_depletion_date: '2027-02-14',
+        reorder_urgency: 'STABLE RUN'
+      }
+    ];
+
+    const FALLBACK_LEADS = [
+      {
+        id: 'LEAD-8801',
+        customer_name: 'Dr. Tara Varma (Kochi)',
+        customer_phone: '919847112233',
+        skin_type: 'Sensitive / Reactive',
+        primary_concern: 'Barrier Repair',
+        prescribed_routine: 'Step 1: Botanical Cleanser + Step 2: Niacinamide Cellular Serum + Step 3: Ceramide Restorative Cream',
+        bundle_total: 6077,
+        whatsapp_link: 'https://wa.me/919847112233?text=Hello%20Dr.%20Tara%20Varma%2C%20following%20up%20from%20Botanica%20Apothecary'
+      },
+      {
+        id: 'LEAD-8802',
+        customer_name: 'Ananya Nambiar (Bangalore)',
+        customer_phone: '919447223344',
+        skin_type: 'Mature / Photo-Damaged',
+        primary_concern: 'Fine Lines & Elasticity',
+        prescribed_routine: 'Step 1: Botanical Cleanser + Step 2: Cold-Pressed Bakuchiol Night Elixir + Step 3: Ceramide Restorative Cream',
+        bundle_total: 6885,
+        whatsapp_link: 'https://wa.me/919447223344?text=Hello%20Ananya%20Nambiar%2C%20following%20up%20from%20Botanica%20Apothecary'
+      },
+      {
+        id: 'LEAD-8803',
+        customer_name: 'Rohan Mehta (Mumbai)',
+        customer_phone: '919820334455',
+        skin_type: 'Oily / Combination',
+        primary_concern: 'Blemish & Texture',
+        prescribed_routine: 'Step 1: Botanical Cleanser + Step 2: Niacinamide Cellular Serum + Step 3: Ceramide Restorative Cream',
+        bundle_total: 6077,
+        whatsapp_link: 'https://wa.me/919820334455?text=Hello%20Rohan%20Mehta%2C%20following%20up%20from%20Botanica%20Apothecary'
+      }
+    ];
+
+    async function loadBatchData() {
+      try {
+        const res = await fetch('/api/batch');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.lots) {
+            BATCH_LOTS = data.lots;
+            renderBatches();
+            renderForecast();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Batch fetch fallback:', e);
+      }
+      BATCH_LOTS = FALLBACK_BATCHES;
+      renderBatches();
+      renderForecast();
+    }
+
+    async function loadLeadsData() {
+      try {
+        const res = await fetch('/api/leads');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.leads) {
+            LEADS = data.leads;
+            renderLeads();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Leads fetch fallback:', e);
+      }
+      LEADS = FALLBACK_LEADS;
+      renderLeads();
+    }
+
+    function renderBatches() {
+      const tbody = document.getElementById('batchLotTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = BATCH_LOTS.map(lot => {
+        let badgeClass = 'badge-fresh';
+        if (lot.computed_status === 'near_expiry') badgeClass = 'badge-warning';
+        if (lot.computed_status === 'quarantined' || lot.computed_status === 'expired') badgeClass = 'badge-danger';
+
+        const isQuarantined = lot.computed_status === 'quarantined';
+
+        return `
+          <tr>
+            <td><code style="font-weight:600; color:var(--color-primary);">${lot.batch_number}</code></td>
+            <td>
+              <div style="font-weight:600;">${lot.product_name}</div>
+              <div style="color:#78716C; font-size:10px;">${lot.facility_location || 'Cleanroom A'}</div>
+            </td>
+            <td>${lot.manufacture_date}</td>
+            <td><strong>${lot.expiry_date}</strong></td>
+            <td><span style="background:#EAE3DC; padding:2px 6px; font-size:10px;">${lot.pao_months || 12}M</span></td>
+            <td>
+              <strong>${lot.quantity_remaining}</strong> / ${lot.quantity_produced} btl
+              <div style="font-size:9px; color:#78716C;">Velocity: ${lot.daily_velocity} / day</div>
+            </td>
+            <td>
+              <span class="badge-status ${badgeClass}">
+                ${lot.status_badge || (isQuarantined ? '🔴 Quarantined' : '🟢 Fresh')}
+              </span>
+            </td>
+            <td>
+              <div style="font-weight:600; color:${lot.run_out_days <= 45 ? '#D97706' : 'inherit'};">
+                ${lot.run_out_days} Days Remaining
+              </div>
+              <div style="font-size:9px; color:#78716C;">Est: ${lot.estimated_depletion_date}</div>
+            </td>
+            <td style="text-align:right;">
+              <button class="btn-action ${isQuarantined ? 'btn-action-release' : 'btn-action-quarantine'}" onclick="toggleLotQuarantine('${lot.id}')">
+                ${isQuarantined ? '✓ Release Batch' : '⚠ Quarantine'}
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Update KPI
+      document.getElementById('kpiTotalLots').textContent = BATCH_LOTS.length;
+      const freshCount = BATCH_LOTS.filter(b => b.computed_status === 'active').length;
+      const warnCount = BATCH_LOTS.filter(b => b.computed_status === 'near_expiry').length;
+      const quarCount = BATCH_LOTS.filter(b => b.computed_status === 'quarantined').length;
+      document.getElementById('kpiLotSub').textContent = `${freshCount} Fresh • ${warnCount} Near Expiry • ${quarCount} Quarantined`;
+    }
+
+    function renderForecast() {
+      const grid = document.getElementById('forecastCardsGrid');
+      if (!grid) return;
+
+      grid.innerHTML = BATCH_LOTS.map(lot => {
+        const pctRemaining = Math.round((lot.quantity_remaining / lot.quantity_produced) * 100);
+        let barClass = '';
+        if (lot.run_out_days <= 30) barClass = 'critical';
+        else if (lot.run_out_days <= 60) barClass = 'warning';
+
+        return `
+          <div class="forecast-card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:10px; color:var(--color-primary);">${lot.batch_number}</span>
+              <span style="font-size:10px; color:#78716C;">${lot.daily_velocity} BTL/DAY</span>
+            </div>
+            <div class="forecast-prod-title">${lot.product_name}</div>
+            
+            <div class="forecast-bar-wrap">
+              <div class="forecast-bar-fill ${barClass}" style="width: ${pctRemaining}%;"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:8px;">
+              <span>Stock: <strong>${lot.quantity_remaining}</strong> (${pctRemaining}%)</span>
+              <span>Run-out: <strong>${lot.run_out_days} days</strong></span>
+            </div>
+
+            <div style="font-size:10px; color:${lot.run_out_days <= 45 ? '#D97706' : '#78716C'}; border-top:1px dashed var(--border-color); padding-top:6px;">
+              STATUS: ${lot.reorder_urgency}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLeads() {
+      const tbody = document.getElementById('leadsTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = LEADS.map(lead => `
+        <tr>
+          <td><code style="color:var(--color-primary);">${lead.id}</code></td>
+          <td><strong>${lead.customer_name}</strong></td>
+          <td><code>+${lead.customer_phone}</code></td>
+          <td>${lead.skin_type}</td>
+          <td><span style="background:#FFF7ED; padding:2px 6px; color:#C2410C;">${lead.primary_concern}</span></td>
+          <td style="max-width:320px; font-size:10px; color:#57534E;">${lead.prescribed_routine}</td>
+          <td><strong>₹${(lead.bundle_total || 6077).toLocaleString('en-IN')}</strong></td>
+          <td style="text-align:right;">
+            <a href="${lead.whatsapp_link || `https://wa.me/${lead.customer_phone}`}" target="_blank" rel="noopener" class="btn-wa-followup">
+              WhatsApp Follow-Up ↗
+            </a>
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('kpiTotalLeads').textContent = LEADS.length;
+    }
+
+    async function toggleLotQuarantine(batchId) {
+      try {
+        const res = await fetch('/api/batch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'toggle_quarantine', batchId })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.lots) {
+            BATCH_LOTS = data.lots;
+            renderBatches();
+            renderForecast();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Quarantine API fallback:', e);
+      }
+
+      // Local fallback toggle
+      const lot = BATCH_LOTS.find(b => b.id === batchId);
+      if (lot) {
+        if (lot.computed_status === 'quarantined') {
+          lot.computed_status = 'active';
+          lot.status_badge = '🟢 Fresh';
+          lot.alert_level = 'fresh';
+        } else {
+          lot.computed_status = 'quarantined';
+          lot.status_badge = '🔴 Quarantined';
+          lot.alert_level = 'danger';
+        }
+        renderBatches();
+        renderForecast();
+      }
+    }
+
+    function refreshBatchData() {
+      loadBatchData();
+    }
+
+    function refreshLeadsData() {
+      loadLeadsData();
+    }
+
+    // POS Dispense Simulation
+    const PRICE_MAP = {
+      'PRD-CLN-01': 1850,
+      'PRD-TRT-02': 2450,
+      'PRD-MST-03': 2850,
+      'PRD-PRF-04': 4600,
+      'PRD-ELX-05': 3400
+    };
+
+    function updatePosPrice() {
+      const sel = document.getElementById('posProductSelect').value;
+      const qty = Number(document.getElementById('posQty').value) || 1;
+      const unitPrice = PRICE_MAP[sel] || 1850;
+      const total = unitPrice * qty;
+      document.getElementById('posTotalDisplay').textContent = `₹${total.toLocaleString('en-IN')}`;
+    }
+
+    async function dispenseCounterPos() {
+      const prodId = document.getElementById('posProductSelect').value;
+      const qty = Number(document.getElementById('posQty').value) || 1;
+      const client = document.getElementById('posClientName').value || 'Walk-In Patron';
+      const unitPrice = PRICE_MAP[prodId] || 1850;
+      const total = unitPrice * qty;
+
+      const payload = {
+        channel: 'pos_counter',
+        customer: { name: client, phone: '919061902295' },
+        items: [{ id: prodId, qty }]
+      };
+
+      let orderId = `POS-APO-${Math.floor(1000 + Math.random() * 9000)}`;
+      let batchAssigned = 'LOT-2026-A12';
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const data = await res.json();
+          orderId = data.orderId;
+          batchAssigned = Array.isArray(data.batchLotsAssigned) ? data.batchLotsAssigned.join('; ') : batchAssigned;
+          loadBatchData(); // refresh stock numbers
+        }
+      } catch (e) {}
+
+      const receipt = document.getElementById('posReceiptTape');
+      receipt.style.display = 'block';
+      receipt.innerHTML = `
+        <div style="text-align:center; margin-bottom:12px;">
+          <div style="font-weight:600; font-size:13px;">BOTANICA APOTHECARY</div>
+          <div style="color:#78716C; font-size:10px;">FLAGSHIP LAB & COUNTER POS • KOCHI</div>
+          <div>----------------------------------------</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>Ticket: <strong>${orderId}</strong></span>
+          <span>${new Date().toLocaleTimeString()}</span>
+        </div>
+        <div style="margin-bottom:8px;">Client: ${client}</div>
+        <div style="border-top:1px dashed #E2D9C8; padding-top:6px; margin-bottom:6px;">
+          <div style="display:flex; justify-content:space-between;">
+            <span>Formulation (${qty}x)</span>
+            <span>₹${total.toLocaleString('en-IN')}</span>
+          </div>
+          <div style="font-size:10px; color:var(--color-primary);">${batchAssigned}</div>
+        </div>
+        <div style="border-top:1px solid #1B1612; padding-top:6px; display:flex; justify-content:space-between; font-weight:600; font-size:12px;">
+          <span>TOTAL PAID (UPI POS):</span>
+          <span>₹${total.toLocaleString('en-IN')}</span>
+        </div>
+        <div style="text-align:center; margin-top:12px; font-size:10px; color:#78716C;">
+          * PAO STABILITY VERIFIED • DISPENSED *
+        </div>
+      `;
+    }
+
+    function updateOperatorPhone(phone) {
+      if (window.applyWhiteLabel) {
+        window.__WL_CONFIG = window.__WL_CONFIG || {};
+        window.__WL_CONFIG.wa = phone;
+        window.applyWhiteLabel();
+      }
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBatchData();
+      loadLeadsData();
+      updatePosPrice();
+    });
+  </script>
 </body>
 </html>
